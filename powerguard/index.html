@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PowerGuard | When Power Fails, Power Guard Prevails</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        /* Hero Background Placeholder */
+        .hero-background {
+            background: linear-gradient(rgba(2, 6, 23, 0.85), rgba(2, 6, 23, 0.85)), 
+                        url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=2072');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .text-gradient-amber {
+            background: linear-gradient(to right, #fbbf24, #f59e0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Animation for smooth appearance */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-200">
+
+    <!-- Header / Navbar -->
+    <header class="fixed w-full z-50 bg-slate-950/80 backdrop-blur-md border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between">
+            <!-- Logo Area (Placeholder) -->
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="relative w-11 h-11 bg-amber-500 rounded-xl flex items-center justify-center shadow-lg shadow-amber-500/20 group-hover:scale-105 transition-transform overflow-hidden">
+                    <!-- Replace the <i> tag below with an <img> tag for your actual logo -->
+                    <!-- <img src="logo.png" alt="PowerGuard Logo" class="w-full h-full object-contain"> -->
+                    <i class="fas fa-bolt text-slate-900 text-xl"></i>
+                    <div class="absolute inset-0 bg-gradient-to-tr from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                </div>
+                <div class="flex flex-col leading-none">
+                    <span class="text-xl font-bold tracking-tight text-white uppercase">Power<span class="text-amber-500">Guard</span></span>
+                    <span class="text-[10px] text-slate-500 font-bold tracking-[0.2em] uppercase">Security & Reliability</span>
+                </div>
+            </a>
+
+            <!-- Navigation & Login -->
+            <div class="flex items-center gap-6">
+                <nav class="hidden md:flex items-center gap-8 text-sm font-semibold text-slate-400">
+                    <a href="#features" class="hover:text-amber-400 transition-colors">Features</a>
+                    <a href="#about" class="hover:text-amber-400 transition-colors">About</a>
+                    <a href="#tech" class="hover:text-amber-400 transition-colors">Tech Stack</a>
+                </nav>
+                <div class="h-6 w-px bg-white/10 hidden md:block"></div>
+                <button class="bg-amber-500 hover:bg-amber-400 text-slate-900 px-6 py-2.5 rounded-full transition-all font-bold shadow-lg shadow-amber-500/20 active:scale-95">
+                    Login
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-background min-h-screen flex items-center justify-center text-center px-4 pt-20">
+        <div class="max-w-4xl space-y-6 animate-fade-in">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-500 text-xs font-bold uppercase tracking-widest mb-4">
+                <span class="relative flex h-2 w-2">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
+                </span>
+                Active Monitoring in PH
+            </div>
+            <h1 class="text-5xl md:text-7xl font-extrabold text-white leading-tight">
+                When Power Fails,<br>
+                <span class="text-gradient-amber">Power Guard Prevails</span>
+            </h1>
+            <p class="text-xl md:text-2xl text-slate-400 font-light tracking-wide max-w-2xl mx-auto leading-relaxed">
+                Stay informed with real-time outage tracking and smart battery management for the modern Filipino lifestyle.
+            </p>
+            <div class="pt-8 flex flex-wrap justify-center gap-4">
+                <button class="bg-amber-500 hover:bg-amber-400 text-slate-900 px-8 py-4 rounded-xl font-bold text-lg transition-all hover:-translate-y-1 shadow-xl shadow-amber-500/10">
+                    Get Started Free
+                </button>
+                <button class="bg-white/5 hover:bg-white/10 border border-white/10 px-8 py-4 rounded-xl font-bold text-lg transition-all hover:border-white/30">
+                    Report Outage
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Context / Problem Section -->
+    <section class="py-32 bg-slate-950" id="about">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid lg:grid-cols-2 gap-20 items-center">
+                <div class="relative">
+                    <div class="absolute -top-20 -left-20 w-64 h-64 bg-amber-500/10 rounded-full blur-[100px]"></div>
+                    <div class="grid grid-cols-2 gap-6 relative z-10">
+                        <div class="space-y-6">
+                            <div class="aspect-square bg-slate-900/50 rounded-3xl p-8 border border-white/5 flex flex-col justify-center items-center text-center group hover:border-amber-500/30 transition-colors">
+                                <div class="w-16 h-16 bg-amber-500/10 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                                    <i class="fas fa-wifi-slash text-3xl text-amber-500"></i>
+                                </div>
+                                <h4 class="font-bold text-white mb-2">No Internet</h4>
+                                <p class="text-xs text-slate-500">Loss of connectivity during brownouts</p>
+                            </div>
+                            <div class="aspect-[4/5] bg-gradient-to-b from-amber-500/20 to-transparent rounded-3xl p-8 border border-amber-500/20 flex flex-col justify-end">
+                                <span class="text-4xl font-black text-amber-500 mb-2">85%</span>
+                                <p class="text-sm font-semibold text-slate-300">Unpreparedness rate in local communities</p>
+                            </div>
+                        </div>
+                        <div class="space-y-6 pt-12">
+                            <div class="aspect-square bg-slate-900/50 rounded-3xl p-8 border border-white/5 flex flex-col justify-center items-center text-center group hover:border-red-500/30 transition-colors">
+                                <div class="w-16 h-16 bg-red-500/10 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                                    <i class="fas fa-battery-empty text-3xl text-red-500"></i>
+                                </div>
+                                <h4 class="font-bold text-white mb-2">Dead Battery</h4>
+                                <p class="text-xs text-slate-500">Unexpected drain on vital devices</p>
+                            </div>
+                            <div class="aspect-square bg-slate-900/50 rounded-3xl p-8 border border-white/5 flex flex-col justify-center items-center text-center">
+                                <i class="fas fa-frown-open text-3xl text-slate-600 mb-4"></i>
+                                <h4 class="font-bold text-slate-500">Lack of Data</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="space-y-8">
+                    <div class="space-y-4">
+                        <h2 class="text-amber-500 font-black tracking-widest uppercase text-sm">The Context</h2>
+                        <h3 class="text-4xl md:text-5xl font-bold text-white">Why PowerGuard?</h3>
+                    </div>
+                    <p class="text-slate-400 text-lg leading-relaxed">
+                        In the Philippines, power stability remains a challenge. From maintenance interruptions to weather-related brownouts, users often find themselves in the dark without a plan.
+                    </p>
+                    <div class="p-6 rounded-2xl bg-white/5 border-l-4 border-amber-500">
+                        <p class="text-slate-200 italic leading-relaxed">
+                            "Our mission is to provide the data you need to bridge the gap between power failure and grid restoration, keeping you connected when it matters most."
+                        </p>
+                    </div>
+                    <div class="flex gap-4 items-center pt-4">
+                        <div class="flex -space-x-3">
+                            <div class="w-10 h-10 rounded-full border-2 border-slate-950 bg-slate-800 flex items-center justify-center text-[10px] font-bold">JD</div>
+                            <div class="w-10 h-10 rounded-full border-2 border-slate-950 bg-slate-800 flex items-center justify-center text-[10px] font-bold">MK</div>
+                            <div class="w-10 h-10 rounded-full border-2 border-slate-950 bg-amber-500 text-slate-950 flex items-center justify-center text-[10px] font-bold">+1k</div>
+                        </div>
+                        <span class="text-slate-500 text-sm font-medium">Joined by users across Luzon & Visayas</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Features -->
+    <section class="py-24" id="features">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-20 space-y-4">
+                <h3 class="text-4xl font-bold text-white">Powerful Tools for Power Failures</h3>
+                <p class="text-slate-500 max-w-xl mx-auto">A unified suite designed to help you navigate through every outage efficiently.</p>
+                <div class="w-20 h-1 bg-amber-500 mx-auto rounded-full"></div>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Outage Reporting -->
+                <div class="glass-card p-10 rounded-[2.5rem] hover:bg-white/5 transition-all group hover:-translate-y-2">
+                    <div class="w-14 h-14 bg-amber-500/10 rounded-2xl flex items-center justify-center mb-8 group-hover:bg-amber-500 group-hover:text-slate-900 transition-all text-amber-500">
+                        <i class="fas fa-map-marked-alt text-2xl"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-4 text-white">Outage Reporting</h4>
+                    <p class="text-slate-500 text-sm leading-relaxed">Crowdsourced reporting that allows you to pinpoint locations, specify times, and provide descriptions to help the community stay informed.</p>
+                </div>
+
+                <!-- Real-Time Monitoring -->
+                <div class="glass-card p-10 rounded-[2.5rem] hover:bg-white/5 transition-all group hover:-translate-y-2">
+                    <div class="w-14 h-14 bg-amber-500/10 rounded-2xl flex items-center justify-center mb-8 group-hover:bg-amber-500 group-hover:text-slate-900 transition-all text-amber-500">
+                        <i class="fas fa-broadcast-tower text-2xl"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-4 text-white">Real-Time Monitoring</h4>
+                    <p class="text-slate-500 text-sm leading-relaxed">View a dynamic map of nearby outages. Check verification status to distinguish between planned maintenance and emergency faults.</p>
+                </div>
+
+                <!-- Battery Tracking -->
+                <div class="glass-card p-10 rounded-[2.5rem] hover:bg-white/5 transition-all group hover:-translate-y-2">
+                    <div class="w-14 h-14 bg-amber-500/10 rounded-2xl flex items-center justify-center mb-8 group-hover:bg-amber-500 group-hover:text-slate-900 transition-all text-amber-500">
+                        <i class="fas fa-battery-half text-2xl"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-4 text-white">Smart Battery Tracking</h4>
+                    <p class="text-slate-500 text-sm leading-relaxed">Automatic and manual battery monitoring alerts you when it's time to find a charging station before your device powers down.</p>
+                </div>
+
+                <!-- Smart Recommendations -->
+                <div class="glass-card p-10 rounded-[2.5rem] hover:bg-white/5 transition-all group hover:-translate-y-2">
+                    <div class="w-14 h-14 bg-amber-500/10 rounded-2xl flex items-center justify-center mb-8 group-hover:bg-amber-500 group-hover:text-slate-900 transition-all text-amber-500">
+                        <i class="fas fa-lightbulb text-2xl"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-4 text-white">Proactive Advice</h4>
+                    <p class="text-slate-500 text-sm leading-relaxed">AI-driven power-saving tips tailored to your specific battery level and the expected duration of local outages.</p>
+                </div>
+
+                <!-- Charging Finder -->
+                <div class="glass-card p-10 rounded-[2.5rem] hover:bg-white/5 transition-all group hover:-translate-y-2">
+                    <div class="w-14 h-14 bg-amber-500/10 rounded-2xl flex items-center justify-center mb-8 group-hover:bg-amber-500 group-hover:text-slate-900 transition-all text-amber-500">
+                        <i class="fas fa-plug text-2xl"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-4 text-white">Charging Finder</h4>
+                    <p class="text-slate-500 text-sm leading-relaxed">Find public charging stations, solar hubs, or local business partners that offer device charging during extended outages.</p>
+                </div>
+
+                <!-- Notification Alerts -->
+                <div class="glass-card p-10 rounded-[2.5rem] hover:bg-white/5 transition-all group hover:-translate-y-2">
+                    <div class="w-14 h-14 bg-amber-500/10 rounded-2xl flex items-center justify-center mb-8 group-hover:bg-amber-500 group-hover:text-slate-900 transition-all text-amber-500">
+                        <i class="fas fa-bell text-2xl"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-4 text-white">Notification Alerts</h4>
+                    <p class="text-slate-500 text-sm leading-relaxed">Get instant push notifications or SMS alerts for outages in your saved locations so you're never caught off guard.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Users Roles -->
+    <section class="py-24 bg-slate-900/50">
+        <div class="max-w-7xl mx-auto px-4">
+            <h3 class="text-3xl font-bold text-center mb-16">Ecosystem Roles</h3>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-slate-900 p-10 rounded-[2.5rem] border border-white/5 flex flex-col">
+                    <div class="flex items-center gap-5 mb-8">
+                        <div class="w-14 h-14 bg-amber-500/10 text-amber-500 rounded-2xl flex items-center justify-center">
+                            <i class="fas fa-users text-2xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-2xl font-bold text-white">General Users</h4>
+                            <p class="text-amber-500/60 text-xs font-bold uppercase tracking-widest">Community Members</p>
+                        </div>
+                    </div>
+                    <ul class="space-y-4 text-slate-400 mb-8 flex-grow">
+                        <li class="flex items-start gap-3"><i class="fas fa-check text-amber-500 mt-1"></i> Register and secure your personal profile</li>
+                        <li class="flex items-start gap-3"><i class="fas fa-check text-amber-500 mt-1"></i> Submit visual/textual outage reports</li>
+                        <li class="flex items-start gap-3"><i class="fas fa-check text-amber-500 mt-1"></i> Set custom thresholds for battery alerts</li>
+                        <li class="flex items-start gap-3"><i class="fas fa-check text-amber-500 mt-1"></i> Access heatmaps of power stability</li>
+                    </ul>
+                    <button class="w-full py-4 bg-white/5 hover:bg-white/10 rounded-2xl font-bold transition-colors">Create User Account</button>
+                </div>
+                <div class="bg-slate-900 p-10 rounded-[2.5rem] border border-white/5 flex flex-col">
+                    <div class="flex items-center gap-5 mb-8">
+                        <div class="w-14 h-14 bg-slate-800 text-white rounded-2xl flex items-center justify-center">
+                            <i class="fas fa-user-shield text-2xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-2xl font-bold text-white">Admin Managers</h4>
+                            <p class="text-slate-500 text-xs font-bold uppercase tracking-widest">Platform Guardians</p>
+                        </div>
+                    </div>
+                    <ul class="space-y-4 text-slate-400 mb-8 flex-grow">
+                        <li class="flex items-start gap-3"><i class="fas fa-shield-alt text-slate-500 mt-1"></i> Verify community reports for accuracy</li>
+                        <li class="flex items-start gap-3"><i class="fas fa-shield-alt text-slate-500 mt-1"></i> Moderate content and remove spam</li>
+                        <li class="flex items-start gap-3"><i class="fas fa-shield-alt text-slate-500 mt-1"></i> Analyze system-wide reliability metrics</li>
+                        <li class="flex items-start gap-3"><i class="fas fa-shield-alt text-slate-500 mt-1"></i> Manage user permissions and security</li>
+                    </ul>
+                    <button class="w-full py-4 bg-slate-800 hover:bg-slate-700 rounded-2xl font-bold transition-colors">Admin Portal Login</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Stack -->
+    <section class="py-32 bg-slate-950" id="tech">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <h3 class="text-sm font-black text-slate-600 uppercase tracking-[0.3em] mb-12">Built with Industry Standards</h3>
+            <div class="flex flex-wrap justify-center gap-12 md:gap-20">
+                <div class="flex flex-col items-center gap-4 group">
+                    <div class="w-16 h-16 rounded-full bg-slate-900 flex items-center justify-center border border-white/5 group-hover:border-amber-500/50 transition-colors">
+                        <i class="fab fa-html5 text-3xl text-slate-500 group-hover:text-amber-500 transition-colors"></i>
+                    </div>
+                    <span class="text-[10px] uppercase font-black text-slate-600 group-hover:text-slate-400">Frontend UI</span>
+                </div>
+                <div class="flex flex-col items-center gap-4 group">
+                    <div class="w-16 h-16 rounded-full bg-slate-900 flex items-center justify-center border border-white/5 group-hover:border-amber-500/50 transition-colors">
+                        <i class="fab fa-php text-3xl text-slate-500 group-hover:text-amber-500 transition-colors"></i>
+                    </div>
+                    <span class="text-[10px] uppercase font-black text-slate-600 group-hover:text-slate-400">REST API</span>
+                </div>
+                <div class="flex flex-col items-center gap-4 group">
+                    <div class="w-16 h-16 rounded-full bg-slate-900 flex items-center justify-center border border-white/5 group-hover:border-amber-500/50 transition-colors">
+                        <i class="fas fa-database text-3xl text-slate-500 group-hover:text-amber-500 transition-colors"></i>
+                    </div>
+                    <span class="text-[10px] uppercase font-black text-slate-600 group-hover:text-slate-400">SQL Engine</span>
+                </div>
+                <div class="flex flex-col items-center gap-4 group">
+                    <div class="w-16 h-16 rounded-full bg-slate-900 flex items-center justify-center border border-white/5 group-hover:border-amber-500/50 transition-colors">
+                        <i class="fas fa-lock text-3xl text-slate-500 group-hover:text-amber-500 transition-colors"></i>
+                    </div>
+                    <span class="text-[10px] uppercase font-black text-slate-600 group-hover:text-slate-400">JWT Security</span>
+                </div>
+                <div class="flex flex-col items-center gap-4 group">
+                    <div class="w-16 h-16 rounded-full bg-slate-900 flex items-center justify-center border border-white/5 group-hover:border-amber-500/50 transition-colors">
+                        <i class="fas fa-map-marked text-3xl text-slate-500 group-hover:text-amber-500 transition-colors"></i>
+                    </div>
+                    <span class="text-[10px] uppercase font-black text-slate-600 group-hover:text-slate-400">Google Maps</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 pt-20 pb-10 border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-12 mb-16">
+                <!-- Branding -->
+                <div class="col-span-1 md:col-span-1 space-y-6">
+                    <a href="#" class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-amber-500 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-bolt text-slate-900"></i>
+                        </div>
+                        <span class="text-xl font-bold tracking-tight text-white uppercase">Power<span class="text-amber-500">Guard</span></span>
+                    </a>
+                    <p class="text-slate-500 text-sm leading-relaxed">
+                        The ultimate companion for managing power outages and device longevity. Dedicated to keeping communities connected during unexpected blackouts.
+                    </p>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-slate-400 hover:bg-amber-500 hover:text-slate-900 transition-all"><i class="fab fa-facebook-f text-sm"></i></a>
+                        <a href="#" class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-slate-400 hover:bg-amber-500 hover:text-slate-900 transition-all"><i class="fab fa-twitter text-sm"></i></a>
+                        <a href="#" class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-slate-400 hover:bg-amber-500 hover:text-slate-900 transition-all"><i class="fab fa-github text-sm"></i></a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="text-white font-bold mb-6">Product</h4>
+                    <ul class="space-y-4 text-sm text-slate-500">
+                        <li><a href="#features" class="hover:text-amber-500 transition-colors">Features</a></li>
+                        <li><a href="#" class="hover:text-amber-500 transition-colors">Reporting Map</a></li>
+                        <li><a href="#" class="hover:text-amber-500 transition-colors">Battery Tracker</a></li>
+                        <li><a href="#" class="hover:text-amber-500 transition-colors">Release Notes</a></li>
+                    </ul>
+                </div>
+
+                <!-- Support -->
+                <div>
+                    <h4 class="text-white font-bold mb-6">Support</h4>
+                    <ul class="space-y-4 text-sm text-slate-500">
+                        <li><a href="#" class="hover:text-amber-500 transition-colors">Help Center</a></li>
+                        <li><a href="#" class="hover:text-amber-500 transition-colors">Report an Issue</a></li>
+                        <li><a href="#" class="hover:text-amber-500 transition-colors">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-amber-500 transition-colors">Terms of Service</a></li>
+                    </ul>
+                </div>
+
+                <!-- Newsletter -->
+                <div>
+                    <h4 class="text-white font-bold mb-6">Stay Alert</h4>
+                    <p class="text-slate-500 text-sm mb-4">Get notified about scheduled maintenance in your area.</p>
+                    <form class="space-y-3" onsubmit="event.preventDefault()">
+                        <input type="email" placeholder="Your email address" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-amber-500 transition-colors text-white">
+                        <button class="w-full py-3 bg-amber-500 hover:bg-amber-400 text-slate-900 rounded-xl font-bold text-sm transition-colors">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Bottom Copyright -->
+            <div class="pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
+                <p class="text-slate-600 text-xs font-medium uppercase tracking-[0.2em]">© 2024 PowerGuard v6.0. Built for the community.</p>
+                <div class="flex gap-8 text-[10px] font-black uppercase tracking-widest text-slate-600">
+                    <span>Luzon</span>
+                    <span>Visayas</span>
+                    <span>Mindanao</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
