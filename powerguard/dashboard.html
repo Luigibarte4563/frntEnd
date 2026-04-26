@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PowerGuard | Intelligence Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #020617; /* slate-950 */
+        }
+
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .active-glow {
+            box-shadow: 0 0 15px rgba(245, 158, 11, 0.3);
+        }
+
+        .battery-ring {
+            transition: stroke-dashoffset 0.5s ease-out;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        .map-dot {
+            animation: pulse-ring 2s infinite;
+        }
+
+        @keyframes pulse-ring {
+            0% { transform: scale(0.7); opacity: 1; }
+            100% { transform: scale(2.5); opacity: 0; }
+        }
+
+        .sidebar-link.active {
+            background: rgba(245, 158, 11, 0.1);
+            color: #fbbf24;
+            border-right: 3px solid #fbbf24;
+        }
+    </style>
+</head>
+<body class="text-slate-200 min-h-screen flex">
+
+    <!-- Sidebar Navigation -->
+    <aside class="w-64 border-r border-white/5 flex flex-col hidden lg:flex fixed h-full bg-slate-950 z-50">
+        <div class="p-8">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-amber-500 rounded-lg flex items-center justify-center">
+                    <i class="fas fa-bolt text-slate-900"></i>
+                </div>
+                <span class="text-xl font-bold tracking-tight text-white uppercase italic">Power<span class="text-amber-500">Guard</span></span>
+            </div>
+        </div>
+
+        <nav class="flex-1 px-4 space-y-2 mt-4">
+            <a href="#" class="sidebar-link active flex items-center gap-4 px-4 py-3 rounded-xl transition-all">
+                <i class="fas fa-chart-line"></i>
+                <span class="font-semibold text-sm">Dashboard</span>
+            </a>
+            <a href="#" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-xl text-slate-500 hover:text-white transition-all">
+                <i class="fas fa-map-marked-alt"></i>
+                <span class="font-semibold text-sm">Outage Map</span>
+            </a>
+            <a href="#" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-xl text-slate-500 hover:text-white transition-all">
+                <i class="fas fa-battery-three-quarters"></i>
+                <span class="font-semibold text-sm">Devices</span>
+            </a>
+            <a href="#" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-xl text-slate-500 hover:text-white transition-all">
+                <i class="fas fa-charging-station"></i>
+                <span class="font-semibold text-sm">Find Hubs</span>
+            </a>
+            <div class="pt-8 pb-4 px-4">
+                <span class="text-[10px] uppercase font-black text-slate-600 tracking-[0.2em]">Community</span>
+            </div>
+            <a href="#" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-xl text-slate-500 hover:text-white transition-all">
+                <i class="fas fa-bullhorn"></i>
+                <span class="font-semibold text-sm">Reports</span>
+            </a>
+            <a href="#" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-xl text-slate-500 hover:text-white transition-all">
+                <i class="fas fa-cog"></i>
+                <span class="font-semibold text-sm">Settings</span>
+            </a>
+        </nav>
+
+        <div class="p-6">
+            <div class="p-4 rounded-2xl bg-amber-500/5 border border-amber-500/10">
+                <p class="text-xs text-amber-500 font-bold mb-2">PRO TIP</p>
+                <p class="text-[11px] text-slate-400 leading-relaxed">Lower screen brightness to 40% to save 15min of runtime.</p>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 lg:ml-64 p-4 lg:p-8">
+        
+        <!-- Header -->
+        <header class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-10">
+            <div>
+                <h1 class="text-2xl font-bold text-white">Welcome back, User</h1>
+                <p class="text-slate-500 text-sm">Grid Status: <span class="text-emerald-400 font-bold"><i class="fas fa-check-circle mr-1"></i> Stable in Manila</span></p>
+            </div>
+            <div class="flex items-center gap-4">
+                <button onclick="toggleModal('reportModal')" class="bg-amber-500 hover:bg-amber-400 text-slate-900 px-5 py-2.5 rounded-xl font-bold text-sm transition-all flex items-center gap-2">
+                    <i class="fas fa-plus"></i> Report Outage
+                </button>
+                <div class="w-10 h-10 rounded-full border border-white/10 bg-slate-800 flex items-center justify-center text-xs font-bold relative">
+                    JD
+                    <span class="absolute top-0 right-0 w-3 h-3 bg-emerald-500 border-2 border-slate-950 rounded-full"></span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Stats Overview -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div class="glass-panel p-6 rounded-3xl">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="w-10 h-10 bg-blue-500/10 text-blue-500 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <span class="text-[10px] text-blue-500 font-bold uppercase tracking-wider">Voltage</span>
+                </div>
+                <div class="text-2xl font-bold">228.4 <span class="text-sm font-normal text-slate-500">V</span></div>
+                <p class="text-xs text-slate-500 mt-1">Normal Operating Range</p>
+            </div>
+            <div class="glass-panel p-6 rounded-3xl">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="w-10 h-10 bg-amber-500/10 text-amber-500 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <span class="text-[10px] text-amber-500 font-bold uppercase tracking-wider">Avg. Uptime</span>
+                </div>
+                <div class="text-2xl font-bold">98.2 <span class="text-sm font-normal text-slate-500">%</span></div>
+                <p class="text-xs text-emerald-500 mt-1"><i class="fas fa-arrow-up"></i> 1.2% from last week</p>
+            </div>
+            <div class="glass-panel p-6 rounded-3xl">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="w-10 h-10 bg-red-500/10 text-red-500 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <span class="text-[10px] text-red-500 font-bold uppercase tracking-wider">Local Reports</span>
+                </div>
+                <div class="text-2xl font-bold">03 <span class="text-sm font-normal text-slate-500">Active</span></div>
+                <p class="text-xs text-slate-500 mt-1">Quezon City Area</p>
+            </div>
+            <div class="glass-panel p-6 rounded-3xl border-emerald-500/20">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="w-10 h-10 bg-emerald-500/10 text-emerald-500 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-battery-full"></i>
+                    </div>
+                    <span class="text-[10px] text-emerald-500 font-bold uppercase tracking-wider">Readiness</span>
+                </div>
+                <div class="text-2xl font-bold">Optimal</div>
+                <p class="text-xs text-slate-500 mt-1">Backup systems verified</p>
+            </div>
+        </div>
+
+        <!-- Main Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            
+            <!-- Map Visualization -->
+            <div class="lg:col-span-2 space-y-8">
+                <div class="glass-panel rounded-3xl overflow-hidden relative group">
+                    <div class="p-6 border-b border-white/5 flex items-center justify-between">
+                        <h3 class="font-bold flex items-center gap-2">
+                            <i class="fas fa-map-marker-alt text-amber-500"></i> Local Activity Map
+                        </h3>
+                        <div class="flex gap-2">
+                            <span class="px-2 py-1 bg-slate-800 rounded text-[10px] font-bold">PH-NCR</span>
+                            <span class="px-2 py-1 bg-slate-800 rounded text-[10px] font-bold">LIVE</span>
+                        </div>
+                    </div>
+                    <!-- Simulated Map Container -->
+                    <div class="h-[400px] bg-slate-900 relative">
+                        <img src="https://images.unsplash.com/photo-1526778548025-fa2f459cd5ce?auto=format&fit=crop&q=80&w=2000" 
+                             class="w-full h-full object-cover opacity-20 grayscale brightness-50" alt="Map Placeholder">
+                        
+                        <!-- Map Indicators -->
+                        <div class="absolute top-1/2 left-1/3 group cursor-pointer">
+                            <span class="block w-4 h-4 bg-red-500 rounded-full relative z-10"></span>
+                            <span class="absolute top-0 left-0 w-4 h-4 bg-red-500 rounded-full map-dot"></span>
+                            <div class="absolute bottom-6 left-1/2 -translate-x-1/2 bg-slate-800 p-2 rounded-lg border border-white/10 text-[10px] w-24 hidden group-hover:block z-20">
+                                <b>QC North</b><br>Transformer Fault
+                            </div>
+                        </div>
+
+                        <div class="absolute top-1/4 left-1/2 group cursor-pointer">
+                            <span class="block w-4 h-4 bg-amber-500 rounded-full relative z-10"></span>
+                            <span class="absolute top-0 left-0 w-4 h-4 bg-amber-500 rounded-full map-dot" style="animation-delay: 0.5s"></span>
+                            <div class="absolute bottom-6 left-1/2 -translate-x-1/2 bg-slate-800 p-2 rounded-lg border border-white/10 text-[10px] w-24 hidden group-hover:block z-20">
+                                <b>Pasig</b><br>Scheduled Maintenance
+                            </div>
+                        </div>
+
+                        <!-- Map Controls -->
+                        <div class="absolute bottom-6 right-6 flex flex-col gap-2">
+                            <button class="w-8 h-8 bg-slate-800 rounded-lg flex items-center justify-center hover:bg-slate-700"><i class="fas fa-plus text-xs"></i></button>
+                            <button class="w-8 h-8 bg-slate-800 rounded-lg flex items-center justify-center hover:bg-slate-700"><i class="fas fa-minus text-xs"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Activity Feed -->
+                <div class="glass-panel p-6 rounded-3xl">
+                    <h3 class="font-bold mb-6 flex items-center gap-2">
+                        <i class="fas fa-history text-slate-500"></i> Recent Reports
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-4 p-4 rounded-2xl bg-white/5 border border-white/5">
+                            <div class="w-12 h-12 rounded-xl bg-red-500/10 flex items-center justify-center text-red-500">
+                                <i class="fas fa-bolt-lightning"></i>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex justify-between items-center mb-1">
+                                    <h4 class="text-sm font-bold">Unscheduled Brownout</h4>
+                                    <span class="text-[10px] text-slate-500">2m ago</span>
+                                </div>
+                                <p class="text-xs text-slate-400">Brgy. Loyola Heights, QC - "Power cut suddenly during light rain."</p>
+                            </div>
+                            <div class="flex items-center gap-1 px-2 py-1 bg-amber-500/10 text-amber-500 rounded text-[10px] font-bold">
+                                <i class="fas fa-user-check"></i> 8 Verified
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-4 p-4 rounded-2xl hover:bg-white/5 transition-colors border border-transparent">
+                            <div class="w-12 h-12 rounded-xl bg-blue-500/10 flex items-center justify-center text-blue-500">
+                                <i class="fas fa-wrench"></i>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex justify-between items-center mb-1">
+                                    <h4 class="text-sm font-bold text-slate-300">Maintenance Update</h4>
+                                    <span class="text-[10px] text-slate-500">45m ago</span>
+                                </div>
+                                <p class="text-xs text-slate-500">Meralco: "Substation check in Makati completed early."</p>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="w-full mt-6 py-3 text-slate-500 hover:text-amber-500 text-xs font-bold uppercase tracking-widest transition-colors">View All Community Reports</button>
+                </div>
+            </div>
+
+            <!-- Right Sidebar: Device Tracking & Recommendations -->
+            <div class="space-y-8">
+                
+                <!-- My Primary Device -->
+                <div class="glass-panel p-8 rounded-3xl relative overflow-hidden">
+                    <div class="absolute -top-10 -right-10 w-32 h-32 bg-amber-500/10 rounded-full blur-2xl"></div>
+                    <div class="relative z-10 flex flex-col items-center">
+                        <h3 class="text-sm font-bold text-slate-500 uppercase tracking-widest mb-8">This Device</h3>
+                        
+                        <!-- Battery Ring -->
+                        <div class="relative w-48 h-48 mb-8">
+                            <svg class="w-full h-full transform -rotate-90">
+                                <circle cx="96" cy="96" r="88" stroke="currentColor" stroke-width="8" fill="transparent" class="text-slate-800" />
+                                <circle id="battery-progress" cx="96" cy="96" r="88" stroke="currentColor" stroke-width="12" stroke-dasharray="552.92" stroke-dashoffset="138.23" fill="transparent" class="text-amber-500 battery-ring" />
+                            </svg>
+                            <div class="absolute inset-0 flex flex-col items-center justify-center">
+                                <span class="text-4xl font-black text-white">75%</span>
+                                <span class="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Battery</span>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 w-full gap-4">
+                            <div class="p-4 rounded-2xl bg-white/5 text-center">
+                                <p class="text-[10px] text-slate-500 uppercase font-black mb-1">Runtime</p>
+                                <p class="font-bold">4h 12m</p>
+                            </div>
+                            <div class="p-4 rounded-2xl bg-white/5 text-center">
+                                <p class="text-[10px] text-slate-500 uppercase font-black mb-1">State</p>
+                                <p class="font-bold text-amber-500">Unplugged</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Secondary Devices -->
+                <div class="glass-panel p-6 rounded-3xl">
+                    <h3 class="font-bold mb-4 text-sm flex items-center gap-2">
+                        <i class="fas fa-link text-slate-500"></i> Connected Assets
+                    </h3>
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between p-3 rounded-xl bg-slate-900/50">
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-laptop text-slate-500"></i>
+                                <span class="text-xs font-semibold">MacBook Pro</span>
+                            </div>
+                            <span class="text-xs font-bold text-emerald-400">92%</span>
+                        </div>
+                        <div class="flex items-center justify-between p-3 rounded-xl bg-slate-900/50">
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-tablet-alt text-slate-500"></i>
+                                <span class="text-xs font-semibold">iPad Pro</span>
+                            </div>
+                            <span class="text-xs font-bold text-red-500">12%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI Recommendations -->
+                <div class="glass-panel p-6 rounded-3xl bg-gradient-to-br from-amber-500/10 to-transparent border-amber-500/20">
+                    <h3 class="font-bold mb-4 text-sm flex items-center gap-2 text-amber-500">
+                        <i class="fas fa-robot"></i> Guard Recommendation
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="flex gap-3">
+                            <div class="w-8 h-8 rounded-lg bg-amber-500 flex items-center justify-center text-slate-900 shrink-0">
+                                <i class="fas fa-cloud-moon text-xs"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs text-slate-300 font-bold mb-1">Storm Warning in Makati</p>
+                                <p class="text-[11px] text-slate-500 leading-relaxed">High chance of surges. Recommendation: Unplug non-essential appliances.</p>
+                            </div>
+                        </div>
+                        <button class="w-full py-2.5 bg-amber-500 hover:bg-amber-400 text-slate-900 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all">Optimize My Settings</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Report Modal (Hidden by Default) -->
+    <div id="reportModal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm">
+        <div class="glass-panel max-w-lg w-full rounded-[2.5rem] p-8 animate-fade-in relative">
+            <button onclick="toggleModal('reportModal')" class="absolute top-6 right-6 w-10 h-10 flex items-center justify-center text-slate-500 hover:text-white transition-colors">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+            
+            <h2 class="text-2xl font-bold mb-2">Report an Outage</h2>
+            <p class="text-slate-500 text-sm mb-8">Your data helps neighbors stay prepared.</p>
+
+            <form class="space-y-6" onsubmit="event.preventDefault(); toggleModal('reportModal')">
+                <div class="space-y-2">
+                    <label class="text-[10px] uppercase font-black text-slate-500 tracking-widest">Outage Type</label>
+                    <div class="grid grid-cols-2 gap-3">
+                        <label class="cursor-pointer">
+                            <input type="radio" name="type" class="hidden peer" checked>
+                            <div class="p-4 rounded-2xl bg-white/5 border border-white/5 peer-checked:border-amber-500 peer-checked:bg-amber-500/10 transition-all text-center">
+                                <i class="fas fa-bolt-lightning mb-2 block"></i>
+                                <span class="text-xs font-bold">Total Blackout</span>
+                            </div>
+                        </label>
+                        <label class="cursor-pointer">
+                            <input type="radio" name="type" class="hidden peer">
+                            <div class="p-4 rounded-2xl bg-white/5 border border-white/5 peer-checked:border-amber-500 peer-checked:bg-amber-500/10 transition-all text-center">
+                                <i class="fas fa-lightbulb mb-2 block"></i>
+                                <span class="text-xs font-bold">Fluctuation</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="space-y-2">
+                    <label class="text-[10px] uppercase font-black text-slate-500 tracking-widest">Location Detail</label>
+                    <input type="text" placeholder="e.g., Street Name, Landmark" class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-amber-500 transition-colors">
+                </div>
+
+                <div class="space-y-2">
+                    <label class="text-[10px] uppercase font-black text-slate-500 tracking-widest">Observations</label>
+                    <textarea rows="3" placeholder="Describe what happened..." class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-amber-500 transition-colors"></textarea>
+                </div>
+
+                <button class="w-full py-4 bg-amber-500 hover:bg-amber-400 text-slate-900 rounded-2xl font-bold transition-all shadow-lg shadow-amber-500/20 active:scale-95">
+                    Submit Community Report
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Modal Toggle
+        function toggleModal(id) {
+            const modal = document.getElementById(id);
+            if (modal.classList.contains('hidden')) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            } else {
+                modal.classList.remove('flex');
+                modal.classList.add('hidden');
+            }
+        }
+
+        // Simple Battery Level Simulation
+        // In a real app, we'd use navigator.getBattery()
+        let batteryLevel = 75;
+        const ring = document.getElementById('battery-progress');
+        const circumference = 88 * 2 * Math.PI; // radius is 88
+
+        function updateBatteryUI(level) {
+            const offset = circumference - (level / 100) * circumference;
+            ring.style.strokeDashoffset = offset;
+        }
+
+        // Initialize UI
+        window.onload = () => {
+            updateBatteryUI(batteryLevel);
+        };
+    </script>
+</body>
+</html>
