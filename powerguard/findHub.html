@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PowerGuard | Find Hubs</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #020617;
+        }
+
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .hub-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .hub-card:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(245, 158, 11, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .sidebar-link.active {
+            background: rgba(245, 158, 11, 0.1);
+            color: #fbbf24;
+            border-right: 3px solid #fbbf24;
+        }
+
+        .status-dot {
+            position: relative;
+        }
+
+        .status-dot::after {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 9999px;
+            background: inherit;
+            opacity: 0.4;
+            animation: ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;
+        }
+
+        @keyframes ping {
+            75%, 100% { transform: scale(2); opacity: 0; }
+        }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 10px; }
+    </style>
+</head>
+<body class="text-slate-200 min-h-screen flex">
+
+    <!-- Sidebar Navigation -->
+    <aside class="w-64 border-r border-white/5 flex flex-col hidden lg:flex fixed h-full bg-slate-950 z-50">
+        <div class="p-8">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-amber-500 rounded-lg flex items-center justify-center">
+                    <i class="fas fa-bolt text-slate-900"></i>
+                </div>
+                <span class="text-xl font-bold tracking-tight text-white uppercase italic">Power<span class="text-amber-500">Guard</span></span>
+            </div>
+        </div>
+
+        <nav class="flex-1 px-4 space-y-2 mt-4">
+            <a href="#" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-xl text-slate-500 hover:text-white transition-all">
+                <i class="fas fa-chart-line"></i>
+                <span class="font-semibold text-sm">Dashboard</span>
+            </a>
+            <a href="#" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-xl text-slate-500 hover:text-white transition-all">
+                <i class="fas fa-map-marked-alt"></i>
+                <span class="font-semibold text-sm">Outage Map</span>
+            </a>
+            <a href="#" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-xl text-slate-500 hover:text-white transition-all">
+                <i class="fas fa-battery-three-quarters"></i>
+                <span class="font-semibold text-sm">Devices</span>
+            </a>
+            <a href="#" class="sidebar-link active flex items-center gap-4 px-4 py-3 rounded-xl transition-all">
+                <i class="fas fa-charging-station"></i>
+                <span class="font-semibold text-sm">Find Hubs</span>
+            </a>
+            <div class="pt-8 pb-4 px-4">
+                <span class="text-[10px] uppercase font-black text-slate-600 tracking-[0.2em]">Community</span>
+            </div>
+            <a href="#" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-xl text-slate-500 hover:text-white transition-all">
+                <i class="fas fa-bullhorn"></i>
+                <span class="font-semibold text-sm">Reports</span>
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 lg:ml-64 p-4 lg:p-8">
+        
+        <!-- Header -->
+        <header class="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10">
+            <div>
+                <h1 class="text-3xl font-bold text-white">Community Hubs</h1>
+                <p class="text-slate-500 text-sm mt-1">Locate active charging stations and backup power centers near you.</p>
+            </div>
+            
+            <div class="flex flex-wrap items-center gap-3">
+                <div class="relative group">
+                    <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 text-xs transition-colors group-focus-within:text-amber-500"></i>
+                    <input type="text" placeholder="Search by district..." class="bg-slate-900/50 border border-white/10 rounded-2xl pl-10 pr-4 py-3 text-sm w-full md:w-64 focus:outline-none focus:border-amber-500 transition-all">
+                </div>
+                <button class="bg-slate-900 border border-white/10 p-3 rounded-2xl hover:bg-slate-800 transition-all">
+                    <i class="fas fa-sliders-h"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Hub Overview Grid -->
+        <div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
+            
+            <!-- Hub List (Left & Middle) -->
+            <div class="xl:col-span-2 space-y-6">
+                
+                <!-- Quick Filter Tabs -->
+                <div class="flex gap-2 overflow-x-auto pb-2 no-scrollbar">
+                    <button class="px-5 py-2.5 rounded-full bg-amber-500 text-slate-900 text-xs font-bold whitespace-nowrap">All Hubs</button>
+                    <button class="px-5 py-2.5 rounded-full bg-white/5 border border-white/10 hover:border-white/20 text-xs font-bold whitespace-nowrap">Charging Only</button>
+                    <button class="px-5 py-2.5 rounded-full bg-white/5 border border-white/10 hover:border-white/20 text-xs font-bold whitespace-nowrap">WiFi Hotspots</button>
+                    <button class="px-5 py-2.5 rounded-full bg-white/5 border border-white/10 hover:border-white/20 text-xs font-bold whitespace-nowrap">Workstations</button>
+                </div>
+
+                <!-- Hub Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    
+                    <!-- Hub 1 -->
+                    <div class="glass-panel p-6 rounded-[2rem] hub-card group">
+                        <div class="flex justify-between items-start mb-6">
+                            <div class="w-12 h-12 bg-emerald-500/10 rounded-2xl flex items-center justify-center text-emerald-500">
+                                <i class="fas fa-charging-station text-xl"></i>
+                            </div>
+                            <div class="flex items-center gap-2 bg-emerald-500/10 px-3 py-1.5 rounded-full">
+                                <span class="w-2 h-2 rounded-full bg-emerald-500 status-dot"></span>
+                                <span class="text-[10px] font-bold text-emerald-500 uppercase tracking-tighter">Active Now</span>
+                            </div>
+                        </div>
+                        <h3 class="text-lg font-bold text-white group-hover:text-amber-500 transition-colors">Makati Tech Plaza Hub</h3>
+                        <p class="text-xs text-slate-500 mt-1 mb-4 flex items-center gap-2">
+                            <i class="fas fa-map-marker-alt"></i> 1.2km away • Ayala Ave
+                        </p>
+                        
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="px-2 py-1 bg-white/5 rounded-lg text-[10px] text-slate-400 border border-white/5">45 Charging Ports</span>
+                            <span class="px-2 py-1 bg-white/5 rounded-lg text-[10px] text-slate-400 border border-white/5">Free Fiber WiFi</span>
+                            <span class="px-2 py-1 bg-white/5 rounded-lg text-[10px] text-slate-400 border border-white/5">A/C Lounge</span>
+                        </div>
+
+                        <div class="flex items-center justify-between pt-4 border-t border-white/5">
+                            <div class="flex -space-x-2">
+                                <div class="w-7 h-7 rounded-full border-2 border-slate-900 bg-slate-800 flex items-center justify-center text-[8px]">JD</div>
+                                <div class="w-7 h-7 rounded-full border-2 border-slate-900 bg-slate-700 flex items-center justify-center text-[8px]">MT</div>
+                                <div class="w-7 h-7 rounded-full border-2 border-slate-900 bg-amber-500 text-slate-900 flex items-center justify-center text-[8px] font-bold">+12</div>
+                            </div>
+                            <button class="text-xs font-bold text-amber-500 flex items-center gap-2 hover:gap-3 transition-all">
+                                Get Directions <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Hub 2 -->
+                    <div class="glass-panel p-6 rounded-[2rem] hub-card group">
+                        <div class="flex justify-between items-start mb-6">
+                            <div class="w-12 h-12 bg-amber-500/10 rounded-2xl flex items-center justify-center text-amber-500">
+                                <i class="fas fa-laptop-code text-xl"></i>
+                            </div>
+                            <div class="flex items-center gap-2 bg-amber-500/10 px-3 py-1.5 rounded-full">
+                                <span class="w-2 h-2 rounded-full bg-amber-500 status-dot"></span>
+                                <span class="text-[10px] font-bold text-amber-500 uppercase tracking-tighter">High Demand</span>
+                            </div>
+                        </div>
+                        <h3 class="text-lg font-bold text-white group-hover:text-amber-500 transition-colors">QC Community Center</h3>
+                        <p class="text-xs text-slate-500 mt-1 mb-4 flex items-center gap-2">
+                            <i class="fas fa-map-marker-alt"></i> 3.8km away • Diliman
+                        </p>
+                        
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="px-2 py-1 bg-white/5 rounded-lg text-[10px] text-slate-400 border border-white/5">Solar Powered</span>
+                            <span class="px-2 py-1 bg-white/5 rounded-lg text-[10px] text-slate-400 border border-white/5">Coffee Station</span>
+                        </div>
+
+                        <div class="flex items-center justify-between pt-4 border-t border-white/5">
+                            <div class="text-[10px] text-slate-500 font-medium">Wait time: <span class="text-amber-500">~15 mins</span></div>
+                            <button class="text-xs font-bold text-amber-500 flex items-center gap-2">
+                                View Details <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Hub 3 -->
+                    <div class="glass-panel p-6 rounded-[2rem] hub-card group opacity-80">
+                        <div class="flex justify-between items-start mb-6">
+                            <div class="w-12 h-12 bg-slate-500/10 rounded-2xl flex items-center justify-center text-slate-500">
+                                <i class="fas fa-store text-xl"></i>
+                            </div>
+                            <div class="flex items-center gap-2 bg-slate-500/10 px-3 py-1.5 rounded-full">
+                                <span class="w-2 h-2 rounded-full bg-slate-500"></span>
+                                <span class="text-[10px] font-bold text-slate-500 uppercase tracking-tighter">Opening Soon (08:00)</span>
+                            </div>
+                        </div>
+                        <h3 class="text-lg font-bold text-white">Eastwood Co-Working Hub</h3>
+                        <p class="text-xs text-slate-500 mt-1 mb-4 flex items-center gap-2">
+                            <i class="fas fa-map-marker-alt"></i> 5.4km away • Libis
+                        </p>
+                        
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="px-2 py-1 bg-white/5 rounded-lg text-[10px] text-slate-400 border border-white/5">Ergonomic Seats</span>
+                        </div>
+
+                        <div class="flex items-center justify-between pt-4 border-t border-white/5">
+                            <div class="text-[10px] text-slate-500">Capacity: 120/120 free</div>
+                            <button class="text-xs font-bold text-slate-500 flex items-center gap-2 cursor-not-allowed">
+                                Locked <i class="fas fa-lock"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Right Panel: Map Preview & Featured -->
+            <div class="space-y-8">
+                
+                <!-- Map Preview Panel -->
+                <div class="glass-panel rounded-[2.5rem] overflow-hidden border border-white/10">
+                    <div class="p-6 border-b border-white/5 flex items-center justify-between">
+                        <h4 class="text-sm font-bold">Proximity Map</h4>
+                        <span class="text-[10px] text-emerald-500 font-bold uppercase tracking-wider">Live View</span>
+                    </div>
+                    <div class="h-64 bg-slate-900 relative">
+                        <!-- Simulated Map -->
+                        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1526778548025-fa2f459cd5ce?auto=format&fit=crop&q=80&w=2000')] opacity-20 grayscale brightness-50 bg-cover"></div>
+                        
+                        <!-- Map Pulse Points -->
+                        <div class="absolute top-1/2 left-1/3 w-4 h-4 bg-amber-500 rounded-full border-4 border-slate-950 status-dot"></div>
+                        <div class="absolute top-1/4 left-1/2 w-4 h-4 bg-emerald-500 rounded-full border-4 border-slate-950"></div>
+                        <div class="absolute bottom-1/4 right-1/3 w-3 h-3 bg-blue-500 rounded-full border-2 border-slate-950"></div>
+                        
+                        <!-- User Location -->
+                        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
+                            <div class="w-10 h-10 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center border border-white/20">
+                                <i class="fas fa-street-view text-white text-sm"></i>
+                            </div>
+                            <div class="bg-white text-slate-900 px-2 py-0.5 rounded text-[8px] font-black mt-1 uppercase">You</div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <button class="w-full py-3 bg-slate-900 hover:bg-slate-800 border border-white/10 rounded-2xl text-xs font-bold transition-all">
+                            Expand Full Screen Map
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Rewards / Points Card -->
+                <div class="glass-panel p-8 rounded-[2.5rem] bg-gradient-to-br from-amber-500/20 to-transparent relative overflow-hidden">
+                    <div class="absolute -top-10 -right-10 w-32 h-32 bg-amber-500/10 rounded-full blur-3xl"></div>
+                    <h4 class="text-[10px] text-amber-500 font-black uppercase tracking-[0.2em] mb-2">Community Points</h4>
+                    <p class="text-xl font-bold text-white mb-4">You've helped 12 people this week.</p>
+                    <p class="text-xs text-slate-400 mb-6 leading-relaxed">Report hub status or share your backup power to earn Guard Points and unlock premium features.</p>
+                    <div class="flex items-center justify-between">
+                        <div class="flex flex-col">
+                            <span class="text-2xl font-black text-white">420</span>
+                            <span class="text-[9px] text-slate-500 font-bold uppercase tracking-widest">Points</span>
+                        </div>
+                        <button class="px-6 py-2.5 bg-amber-500 text-slate-900 rounded-xl text-[10px] font-black uppercase tracking-widest hover:scale-105 transition-all">Redeem</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Mobile Nav Spacer -->
+    <div class="h-20 lg:hidden"></div>
+
+</body>
+</html>
