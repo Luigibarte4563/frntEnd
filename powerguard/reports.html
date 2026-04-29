@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PowerGuard | Reports</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #020617;
+        }
+
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .sidebar-link.active {
+            background: rgba(245, 158, 11, 0.1);
+            color: #fbbf24;
+            border-right: 3px solid #fbbf24;
+        }
+
+        .report-card:hover {
+            background: rgba(255, 255, 255, 0.03);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 10px; }
+    </style>
+</head>
+<body class="text-slate-200 min-h-screen flex">
+
+    <aside class="w-64 border-r border-white/5 flex flex-col hidden lg:flex fixed h-full bg-slate-950 z-50">
+        <div class="p-8">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-amber-500 rounded-lg flex items-center justify-center">
+                    <i class="fas fa-bolt text-slate-900"></i>
+                </div>
+                <span class="text-xl font-bold tracking-tight text-white uppercase italic">Power<span class="text-amber-500">Guard</span></span>
+            </div>
+        </div>
+
+        <nav class="flex-1 px-4 space-y-2 mt-4">
+            <a href="#" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-xl text-slate-500 hover:text-white transition-all">
+                <i class="fas fa-chart-line"></i>
+                <span class="font-semibold text-sm">Dashboard</span>
+            </a>
+            <a href="#" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-xl text-slate-500 hover:text-white transition-all">
+                <i class="fas fa-map-marked-alt"></i>
+                <span class="font-semibold text-sm">Outage Map</span>
+            </a>
+            <a href="#" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-xl text-slate-500 hover:text-white transition-all">
+                <i class="fas fa-battery-three-quarters"></i>
+                <span class="font-semibold text-sm">Devices</span>
+            </a>
+            <div class="pt-8 pb-4 px-4">
+                <span class="text-[10px] uppercase font-black text-slate-600 tracking-[0.2em]">Community</span>
+            </div>
+            <a href="#" class="sidebar-link active flex items-center gap-4 px-4 py-3 rounded-xl transition-all">
+                <i class="fas fa-bullhorn"></i>
+                <span class="font-semibold text-sm">Reports</span>
+            </a>
+            <a href="#" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-xl text-slate-500 hover:text-white transition-all">
+                <i class="fas fa-cog"></i>
+                <span class="font-semibold text-sm">Settings</span>
+            </a>
+        </nav>
+    </aside>
+
+    <main class="flex-1 lg:ml-64 flex flex-col min-h-screen">
+        
+        <header class="h-20 glass-panel border-b border-white/5 px-8 flex items-center justify-between sticky top-0 z-40">
+            <div>
+                <h2 class="text-lg font-bold text-white">Community Reports</h2>
+                <p class="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Verified Incident Feed</p>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <div class="relative hidden md:block">
+                    <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
+                    <input type="text" placeholder="Filter by neighborhood..." class="bg-slate-900 border border-white/10 rounded-xl pl-10 pr-4 py-2 text-xs w-64 focus:outline-none focus:border-amber-500">
+                </div>
+                <button class="bg-amber-500 text-slate-900 px-5 py-2 rounded-xl font-bold text-xs">
+                    <i class="fas fa-plus mr-2"></i>New Report
+                </button>
+            </div>
+        </header>
+
+        <div class="p-8 space-y-8">
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="glass-panel p-6 rounded-[2rem]">
+                    <p class="text-slate-500 text-[10px] font-black uppercase tracking-widest mb-2">Total Today</p>
+                    <div class="flex items-end gap-3">
+                        <span class="text-3xl font-bold">128</span>
+                        <span class="text-emerald-500 text-xs font-bold mb-1"><i class="fas fa-caret-up"></i> 12%</span>
+                    </div>
+                </div>
+                <div class="glass-panel p-6 rounded-[2rem]">
+                    <p class="text-slate-500 text-[10px] font-black uppercase tracking-widest mb-2">Active Outages</p>
+                    <div class="flex items-end gap-3">
+                        <span class="text-3xl font-bold text-red-500">12</span>
+                        <span class="text-slate-500 text-xs mb-1">Across 4 districts</span>
+                    </div>
+                </div>
+                <div class="glass-panel p-6 rounded-[2rem]">
+                    <p class="text-slate-500 text-[10px] font-black uppercase tracking-widest mb-2">Avg. Resolution</p>
+                    <div class="flex items-end gap-3">
+                        <span class="text-3xl font-bold">2.4h</span>
+                        <span class="text-amber-500 text-xs font-bold mb-1">System Load High</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex items-center justify-between">
+                <h3 class="text-sm font-bold uppercase tracking-widest text-slate-400">Recent Activity</h3>
+                <div class="flex gap-2">
+                    <button class="px-3 py-1.5 rounded-lg bg-white/5 text-[10px] font-bold border border-white/10">ALL</button>
+                    <button class="px-3 py-1.5 rounded-lg bg-red-500/10 text-red-500 text-[10px] font-bold border border-red-500/20">CRITICAL</button>
+                    <button class="px-3 py-1.5 rounded-lg bg-emerald-500/10 text-emerald-500 text-[10px] font-bold border border-emerald-500/20">RESOLVED</button>
+                </div>
+            </div>
+
+            <div class="space-y-4">
+                
+                <div class="glass-panel p-6 rounded-[2rem] report-card transition-all border border-white/5 flex flex-col md:flex-row gap-6 items-start">
+                    <div class="w-12 h-12 rounded-2xl bg-red-500/20 flex items-center justify-center shrink-0">
+                        <i class="fas fa-bolt-lightning text-red-500"></i>
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex justify-between items-start mb-1">
+                            <h4 class="font-bold text-white">Total Blackout: Makati District 2</h4>
+                            <span class="text-[10px] text-slate-500 font-bold uppercase">12 Minutes Ago</span>
+                        </div>
+                        <p class="text-sm text-slate-400 leading-relaxed max-w-2xl">Whole street is dark. Streetlights are also offline. Verified by 4 nearby PowerGuard devices.</p>
+                        
+                        <div class="flex items-center gap-6 mt-4">
+                            <div class="flex items-center gap-2 text-[11px] font-bold text-amber-500">
+                                <i class="fas fa-shield-check"></i>
+                                VERIFIED INCIDENT
+                            </div>
+                            <div class="flex items-center gap-2 text-[11px] font-bold text-slate-500">
+                                <i class="fas fa-user-group"></i>
+                                24 PEERS AFFECTED
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex gap-2 shrink-0 self-end md:self-center">
+                        <button class="px-4 py-2 bg-white/5 hover:bg-white/10 rounded-xl text-xs font-bold transition-all">Details</button>
+                        <button class="px-4 py-2 bg-amber-500 text-slate-900 rounded-xl text-xs font-bold transition-all">I Have This Too</button>
+                    </div>
+                </div>
+
+                <div class="glass-panel p-6 rounded-[2rem] report-card transition-all border border-white/5 flex flex-col md:flex-row gap-6 items-start">
+                    <div class="w-12 h-12 rounded-2xl bg-amber-500/20 flex items-center justify-center shrink-0">
+                        <i class="fas fa-triangle-exclamation text-amber-500"></i>
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex justify-between items-start mb-1">
+                            <h4 class="font-bold text-white">Voltage Surge Warning</h4>
+                            <span class="text-[10px] text-slate-500 font-bold uppercase">1 Hour Ago</span>
+                        </div>
+                        <p class="text-sm text-slate-400 leading-relaxed max-w-2xl">High voltage fluctuations detected. Appliances behaving abnormally. Technical team notified.</p>
+                        
+                        <div class="flex items-center gap-6 mt-4">
+                            <div class="flex items-center gap-2 text-[11px] font-bold text-slate-400">
+                                <i class="fas fa-clock"></i>
+                                PENDING INSPECTION
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex gap-2 shrink-0 self-end md:self-center">
+                        <button class="px-4 py-2 bg-white/5 hover:bg-white/10 rounded-xl text-xs font-bold transition-all">Details</button>
+                    </div>
+                </div>
+
+                <div class="glass-panel p-6 rounded-[2rem] report-card transition-all border border-white/5 opacity-60 flex flex-col md:flex-row gap-6 items-start">
+                    <div class="w-12 h-12 rounded-2xl bg-emerald-500/20 flex items-center justify-center shrink-0">
+                        <i class="fas fa-check text-emerald-500"></i>
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex justify-between items-start mb-1">
+                            <h4 class="font-bold text-white line-through">Scheduled Maintenance: Taguig</h4>
+                            <span class="text-[10px] text-slate-500 font-bold uppercase">3 Hours Ago</span>
+                        </div>
+                        <p class="text-sm text-slate-400 leading-relaxed max-w-2xl">Maintenance completed successfully. Grid stability returned to 100%.</p>
+                    </div>
+                    <span class="px-3 py-1 bg-emerald-500/10 text-emerald-500 text-[10px] font-bold rounded-full border border-emerald-500/20">RESOLVED</span>
+                </div>
+
+            </div>
+        </div>
+    </main>
+</body>
+</html>
