@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PowerGuard | Advanced Settings</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #020617; /* slate-950 */
+        }
+
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .sidebar-link.active {
+            background: rgba(245, 158, 11, 0.1);
+            color: #fbbf24;
+            border-right: 3px solid #fbbf24;
+        }
+
+        /* Custom Toggle */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 38px;
+            height: 20px;
+        }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #334155;
+            transition: .3s;
+            border-radius: 20px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 14px; width: 14px;
+            left: 3px; bottom: 3px;
+            background-color: #94a3b8;
+            transition: .3s;
+            border-radius: 50%;
+        }
+        input:checked + .slider { background-color: #f59e0b; }
+        input:checked + .slider:before {
+            transform: translateX(18px);
+            background-color: #020617;
+        }
+
+        .input-field {
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.2s;
+        }
+        .input-field:focus {
+            border-color: #f59e0b;
+            background: rgba(30, 41, 59, 0.8);
+            outline: none;
+        }
+    </style>
+</head>
+<body class="text-slate-200 min-h-screen flex">
+
+    <aside class="w-64 border-r border-white/5 flex flex-col hidden lg:flex fixed h-full bg-slate-950 z-50">
+        <div class="p-8">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-amber-500 rounded-lg flex items-center justify-center">
+                    <i class="fas fa-bolt text-slate-900"></i>
+                </div>
+                <span class="text-xl font-bold tracking-tight text-white uppercase italic">Power<span class="text-amber-500">Guard</span></span>
+            </div>
+        </div>
+
+        <nav class="flex-1 px-4 space-y-2 mt-4">
+            <a href="dashboard.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-xl transition-all">
+                <i class="fas fa-chart-line"></i>
+                <span class="font-semibold text-sm">Dashboard</span>
+            </a>
+            <a href="outageMap.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-xl text-slate-500 hover:text-white transition-all">
+                <i class="fas fa-map-marked-alt"></i>
+                <span class="font-semibold text-sm">Outage Map</span>
+            </a>
+            <a href="" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-xl text-slate-500 hover:text-white transition-all">
+                <i class="fas fa-battery-three-quarters"></i>
+                <span class="font-semibold text-sm">Devices</span>
+            </a>
+            <a href="findHub.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-xl text-slate-500 hover:text-white transition-all">
+                <i class="fas fa-charging-station"></i>
+                <span class="font-semibold text-sm">Find Hubs</span>
+            </a>
+            <div class="pt-8 pb-4 px-4">
+                <span class="text-[10px] uppercase font-black text-slate-600 tracking-[0.2em]">Community</span>
+            </div>
+            <a href="reports.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-xl text-slate-500 hover:text-white transition-all">
+                <i class="fas fa-bullhorn"></i>
+                <span class="font-semibold text-sm">Reports</span>
+            </a>
+            <a href="settings.html" class="sidebar-link flex active items-center gap-4 px-4 py-3 rounded-xl text-slate-500 hover:text-white transition-all">
+                <i class="fas fa-cog"></i>
+                <span class="font-semibold text-sm">Settings</span>
+            </a>
+        </nav>
+    </aside>
+
+    <main class="flex-1 lg:ml-64 p-4 lg:p-8">
+        
+        <header class="flex justify-between items-end mb-8">
+            <div>
+                <h1 class="text-2xl font-bold text-white">Account & Preferences</h1>
+                <p class="text-slate-500 text-sm">Manage your digital identity and alert matrix.</p>
+            </div>
+            <button class="bg-amber-500 hover:bg-amber-400 text-slate-900 px-6 py-2.5 rounded-xl font-bold text-sm transition-all">
+                Save All Changes
+            </button>
+        </header>
+
+        <div class="space-y-6">
+            
+            <section class="glass-panel rounded-[2rem] overflow-hidden">
+                <div class="h-24 bg-gradient-to-r from-amber-500/20 to-blue-500/10 border-b border-white/5"></div>
+                <div class="px-8 pb-8">
+                    <div class="flex flex-col md:flex-row gap-6 -mt-10 items-end md:items-center">
+                        <div class="relative group">
+                            <div class="w-28 h-28 rounded-3xl bg-slate-800 border-4 border-slate-950 flex items-center justify-center text-3xl font-bold shadow-2xl overflow-hidden">
+                                <img src="https://ui-avatars.com/api/?name=John+Doe&background=f59e0b&color=020617&size=128" alt="Avatar">
+                                <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center cursor-pointer">
+                                    <i class="fas fa-pen text-white"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex-1">
+                            <h2 class="text-xl font-bold text-white">John Doe</h2>
+                            <p class="text-slate-500 text-sm italic">Verified Resident • Quezon City</p>
+                        </div>
+                        <div class="flex gap-2">
+                            <span class="px-3 py-1 bg-emerald-500/10 text-emerald-500 rounded-full text-[10px] font-black uppercase tracking-wider border border-emerald-500/20">Active Grid Link</span>
+                            <span class="px-3 py-1 bg-amber-500/10 text-amber-500 rounded-full text-[10px] font-black uppercase tracking-wider border border-amber-500/20">Pro Member</span>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-10">
+                        <div class="space-y-1.5">
+                            <label class="text-[10px] uppercase font-black text-slate-500 tracking-widest ml-1">Display Name</label>
+                            <input type="text" value="John Doe" class="input-field w-full rounded-xl px-4 py-3 text-sm text-white">
+                        </div>
+                        <div class="space-y-1.5">
+                            <label class="text-[10px] uppercase font-black text-slate-500 tracking-widest ml-1">Email Connection</label>
+                            <input type="email" value="j.doe@powerguard.ph" class="input-field w-full rounded-xl px-4 py-3 text-sm text-white">
+                        </div>
+                        <div class="space-y-1.5">
+                            <label class="text-[10px] uppercase font-black text-slate-500 tracking-widest ml-1">Mobile Hotline</label>
+                            <input type="text" value="+63 917 123 4567" class="input-field w-full rounded-xl px-4 py-3 text-sm text-white">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                
+                <section class="glass-panel p-8 rounded-[2rem]">
+                    <div class="flex items-center justify-between mb-8">
+                        <h3 class="text-lg font-bold flex items-center gap-3">
+                            <i class="fas fa-bell text-amber-500"></i> Notification Matrix
+                        </h3>
+                        <span class="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Global Toggles</span>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between p-4 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/[0.08] transition-colors">
+                            <div class="flex gap-4">
+                                <div class="text-amber-500 mt-1"><i class="fas fa-radiation"></i></div>
+                                <div>
+                                    <h4 class="text-sm font-bold">Emergency Grid Failure</h4>
+                                    <p class="text-xs text-slate-500">Immediate push alerts for total area blackouts.</p>
+                                </div>
+                            </div>
+                            <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+                        </div>
+                        <div class="flex items-center justify-between p-4 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/[0.08] transition-colors">
+                            <div class="flex gap-4">
+                                <div class="text-blue-500 mt-1"><i class="fas fa-calendar-check"></i></div>
+                                <div>
+                                    <h4 class="text-sm font-bold">Scheduled Maintenance</h4>
+                                    <p class="text-xs text-slate-500">48-hour advance notice of Meralco activities.</p>
+                                </div>
+                            </div>
+                            <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+                        </div>
+                        <div class="flex items-center justify-between p-4 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/[0.08] transition-colors">
+                            <div class="flex gap-4">
+                                <div class="text-slate-400 mt-1"><i class="fas fa-users"></i></div>
+                                <div>
+                                    <h4 class="text-sm font-bold">Community Chatter</h4>
+                                    <p class="text-xs text-slate-500">Alerts when 5+ neighbors report fluctuations.</p>
+                                </div>
+                            </div>
+                            <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="glass-panel p-8 rounded-[2rem]">
+                    <div class="flex items-center justify-between mb-8">
+                        <h3 class="text-lg font-bold flex items-center gap-3">
+                            <i class="fas fa-shield-halved text-amber-500"></i> Security & Access
+                        </h3>
+                        <i class="fas fa-lock text-slate-600 text-xs"></i>
+                    </div>
+
+                    <div class="space-y-6">
+                        <div class="grid grid-cols-1 gap-4">
+                            <button class="w-full flex items-center justify-between p-4 rounded-2xl border border-white/10 hover:bg-white/5 transition-all text-left">
+                                <div class="flex gap-4">
+                                    <div class="text-slate-400 mt-1"><i class="fas fa-key"></i></div>
+                                    <div>
+                                        <h4 class="text-sm font-bold">Update Master Password</h4>
+                                        <p class="text-xs text-slate-500">Last changed 4 months ago.</p>
+                                    </div>
+                                </div>
+                                <i class="fas fa-chevron-right text-slate-600 text-xs"></i>
+                            </button>
+
+                            <div class="p-4 rounded-2xl bg-amber-500/5 border border-amber-500/10">
+                                <div class="flex items-center justify-between mb-2">
+                                    <h4 class="text-sm font-bold text-amber-500">Two-Factor Auth</h4>
+                                    <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+                                </div>
+                                <p class="text-xs text-slate-400 leading-relaxed">Securing your account via SMS verification for all new device logins.</p>
+                            </div>
+                        </div>
+
+        
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
