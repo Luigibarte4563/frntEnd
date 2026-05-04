@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PowerGuide - Radius Outage Test</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+    <style>
+        body{
+            font-family: Arial;
+            padding: 10px;
+        }
+
+        #map{
+            height: 450px;
+            margin-top: 10px;
+        }
+
+        .panel{
+            padding: 10px;
+            background: #f4f4f4;
+            margin-bottom: 10px;
+        }
+
+        input[type="range"]{
+            width: 300px;
+        }
+    </style>
+</head>
+
+<body>
+
+<h2>Electric Company - Outage Radius Test</h2>
+
+<div class="panel">
+
+    <label>Radius (meters): </label>
+    <input type="range" id="radiusSlider" min="500" max="20000" value="3000">
+    <span id="radiusValue">3000</span> m
+
+    <br><br>
+
+    <b>Latitude:</b> <span id="latOut">-</span><br>
+    <b>Longitude:</b> <span id="lngOut">-</span><br>
+
+</div>
+
+<div id="map"></div>
+
+<script>
+
+/* =========================
+   MAP INIT
+========================= */
+let map = L.map('map').setView([16.0431, 120.3330], 13);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap'
+}).addTo(map);
+
+/* ICON */
+const icon = L.icon({
+    iconUrl: 'https://cdn-icons-png.flaticon.com/512/355/355980.png',
+    iconSize: [35, 35],
+    iconAnchor: [17, 35]
+});
+
+/* =========================
+   VARIABLES
+========================= */
+let centerMarker = null;
+let radiusCircle = null;
+let radius = 3000;
+
+/* =========================
+   RADIUS SLIDER
+========================= */
+const slider = document.getElementById("radiusSlider");
+const radiusValue = document.getElementById("radiusValue");
+
+slider.addEventListener("input", function(){
+
+    radius = parseInt(this.value);
+    radiusValue.innerText = radius;
+
+    if(radiusCircle){
+        radiusCircle.setRadius(radius);
+    }
+});
+
+/* =========================
+   MAP CLICK (SET CENTER)
+========================= */
+map.on("click", function(e){
+
+    const lat = e.latlng.lat;
+    const lng = e.latlng.lng;
+
+    document.getElementById("latOut").innerText = lat;
+    document.getElementById("lngOut").innerText = lng;
+
+    // remove old
+    if(centerMarker) map.removeLayer(centerMarker);
+    if(radiusCircle) map.removeLayer(radiusCircle);
+
+    // draggable marker
+    centerMarker = L.marker([lat, lng], {
+        draggable: true,
+        icon: icon
+    }).addTo(map);
+
+    // circle
+    radiusCircle = L.circle([lat, lng], {
+        radius: radius,
+        color: "red",
+        fillColor: "#f03",
+        fillOpacity: 0.2
+    }).addTo(map);
+
+    // update on drag
+    centerMarker.on("drag", function(){
+
+        const pos = centerMarker.getLatLng();
+
+        radiusCircle.setLatLng(pos);
+
+        document.getElementById("latOut").innerText = pos.lat;
+        document.getElementById("lngOut").innerText = pos.lng;
+    });
+});
+
+</script>
+
+</body>
+</html>
