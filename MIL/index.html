@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MIL Acad | Media & Information Literacy Academy</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0fdfa',
+                            100: '#ccfbf1',
+                            500: '#14b8a6',
+                            600: '#0d9488',
+                            700: '#0f766e',
+                            800: '#115e59',
+                            900: '#134e4a',
+                            dark: '#0f172a',
+                            navy: '#0b1329',
+                            accent: '#0284c7'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .hero-gradient {
+            background: radial-gradient(circle at 70% 20%, rgba(2, 132, 199, 0.25) 0%, rgba(13, 148, 136, 0.15) 35%, rgba(11, 19, 41, 0.98) 100%);
+        }
+        .glass-card {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .glow-effect {
+            box-shadow: 0 0 25px -5px rgba(20, 184, 166, 0.3);
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 antialiased selection:bg-teal-500 selection:text-white">
+
+    <!-- Top Announcement Bar -->
+    <div class="bg-gradient-to-r from-teal-700 via-sky-700 to-indigo-800 text-white text-xs sm:text-sm py-2 px-4 text-center font-medium flex items-center justify-center gap-2">
+        <span class="bg-white/20 text-white text-xs px-2 py-0.5 rounded-full uppercase tracking-wider font-semibold">New 2026 Curriculum</span>
+        <span>AI Literacy, Deepfakes & Algorithmic Ethics modules are now live!</span>
+        <a href="#courses" class="underline hover:text-teal-200 ml-1 font-semibold">Explore Courses &rarr;</a>
+    </div>
+
+    <!-- Main Header / Navigation -->
+    <header class="sticky top-0 z-40 bg-slate-900/90 backdrop-blur-md border-b border-slate-800">
+        <div class="max-w-7xl mx-mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            
+            <!-- Logo -->
+            <div class="flex items-center gap-3 cursor-pointer" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+                <div class="w-11 h-11 rounded-xl bg-gradient-to-tr from-teal-500 via-sky-500 to-indigo-600 flex items-center justify-center text-white shadow-lg shadow-teal-500/20">
+                    <i data-lucide="shield-check" class="w-6 h-6"></i>
+                </div>
+                <div>
+                    <div class="flex items-center gap-1.5">
+                        <span class="font-black text-2xl tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white via-slate-100 to-slate-400">MIL</span>
+                        <span class="text-teal-400 font-bold text-2xl">Acad</span>
+                    </div>
+                    <p class="text-[10px] text-slate-400 uppercase tracking-widest font-semibold">Media & Info Literacy</p>
+                </div>
+            </div>
+
+            <!-- Desktop Nav Links -->
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
+                <a href="#about" class="hover:text-teal-400 transition-colors">Why MIL?</a>
+                <a href="#courses" class="hover:text-teal-400 transition-colors">Courses & Pathways</a>
+                <a href="#sandbox" class="hover:text-teal-400 transition-colors flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-teal-400 animate-pulse"></span>
+                    News Analyzer Tool
+                </a>
+                <a href="#educators" class="hover:text-teal-400 transition-colors">Educator Hub</a>
+                <a href="#badging" class="hover:text-teal-400 transition-colors">Certificates</a>
+            </nav>
+
+            <!-- Action Buttons & Portal Login -->
+            <div class="hidden sm:flex items-center gap-4">
+                <button onclick="toggleModal('searchModal')" class="text-slate-400 hover:text-white p-2 rounded-lg hover:bg-slate-800 transition">
+                    <i data-lucide="search" class="w-5 h-5"></i>
+                </button>
+                <button onclick="toggleModal('loginModal')" class="text-sm font-semibold text-slate-200 hover:text-teal-400 px-3 py-2 transition">
+                    Log In
+                </button>
+                <a href="#diagnostic" class="bg-gradient-to-r from-teal-500 to-sky-600 hover:from-teal-600 hover:to-sky-700 text-white font-semibold text-sm px-5 py-2.5 rounded-xl shadow-lg shadow-teal-500/25 transition duration-200 transform hover:-translate-y-0.5">
+                    Get Started Free
+                </a>
+            </div>
+
+            <!-- Mobile Menu Toggle Button -->
+            <button onclick="toggleMobileNav()" class="md:hidden text-slate-300 hover:text-white p-2">
+                <i data-lucide="menu" id="menuIcon" class="w-6 h-6"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div id="mobileNav" class="hidden md:hidden bg-slate-900 border-b border-slate-800 px-4 pt-2 pb-6 space-y-3">
+            <a href="#about" onclick="toggleMobileNav()" class="block py-2 text-slate-300 hover:text-teal-400 font-medium">Why MIL?</a>
+            <a href="#courses" onclick="toggleMobileNav()" class="block py-2 text-slate-300 hover:text-teal-400 font-medium">Courses & Pathways</a>
+            <a href="#sandbox" onclick="toggleMobileNav()" class="block py-2 text-slate-300 hover:text-teal-400 font-medium">News Analyzer Sandbox</a>
+            <a href="#educators" onclick="toggleMobileNav()" class="block py-2 text-slate-300 hover:text-teal-400 font-medium">Educator Hub</a>
+            <a href="#badging" onclick="toggleMobileNav()" class="block py-2 text-slate-300 hover:text-teal-400 font-medium">Certificates</a>
+            <div class="pt-4 border-t border-slate-800 flex flex-col gap-3">
+                <button onclick="toggleModal('loginModal'); toggleMobileNav();" class="w-full text-center py-2.5 text-slate-200 font-semibold bg-slate-800 rounded-xl">Log In</button>
+                <a href="#diagnostic" onclick="toggleMobileNav()" class="w-full text-center py-2.5 text-white font-semibold bg-teal-500 rounded-xl">Get Started Free</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative bg-brand-navy hero-gradient pt-16 pb-24 md:pt-24 md:pb-32 overflow-hidden">
+        <!-- Decorative grid background -->
+        <div class="absolute inset-0 bg-[linear-gradient(to_right,#1e293b15_1px,transparent_1px),linear-gradient(to_bottom,#1e293b15_1px,transparent_1px)] bg-[size:4rem_4rem]"></div>
+        
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Hero Left Column -->
+                <div class="lg:col-span-7 space-y-8 text-center lg:text-left">
+                    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-teal-500/10 border border-teal-500/30 text-teal-300 text-xs sm:text-sm font-semibold">
+                        <i data-lucide="sparkles" class="w-4 h-4 text-teal-400"></i>
+                        <span>Empowering Global Digital Citizens</span>
+                    </div>
+
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-[1.15]">
+                        Navigate Information.<br/>
+                        <span class="bg-clip-text text-transparent bg-gradient-to-r from-teal-400 via-sky-400 to-indigo-400">
+                            Master Truth in the AI Era.
+                        </span>
+                    </h1>
+
+                    <p class="text-lg sm:text-xl text-slate-300 font-normal max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+                        MIL Acad is the global learning platform for Media & Information Literacy. Gain critical skills to detect misinformation, evaluate digital media, understand AI algorithms, and lead responsible digital communities.
+                    </p>
+
+                    <!-- Hero Call to Action Buttons -->
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+                        <a href="#courses" class="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-teal-500 via-teal-600 to-sky-600 hover:from-teal-600 hover:to-sky-700 text-white font-bold text-base rounded-xl shadow-xl shadow-teal-500/25 transition transform hover:-translate-y-0.5 flex items-center justify-center gap-2">
+                            <span>Explore Learning Pathways</span>
+                            <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#sandbox" class="w-full sm:w-auto px-8 py-4 bg-slate-800/80 hover:bg-slate-800 text-slate-200 border border-slate-700 font-semibold text-base rounded-xl transition flex items-center justify-center gap-2">
+                            <i data-lucide="cpu" class="w-5 h-5 text-teal-400"></i>
+                            <span>Try News Analyzer Sandbox</span>
+                        </a>
+                    </div>
+
+                    <!-- Trust indicators -->
+                    <div class="pt-6 border-t border-slate-800/80 grid grid-cols-3 gap-4 text-center lg:text-left">
+                        <div>
+                            <div class="text-2xl sm:text-3xl font-extrabold text-white">1.8M+</div>
+                            <div class="text-xs sm:text-sm text-slate-400">Active Learners</div>
+                        </div>
+                        <div>
+                            <div class="text-2xl sm:text-3xl font-extrabold text-white">120+</div>
+                            <div class="text-xs sm:text-sm text-slate-400">Partner Institutions</div>
+                        </div>
+                        <div>
+                            <div class="text-2xl sm:text-3xl font-extrabold text-white">100%</div>
+                            <div class="text-xs sm:text-sm text-slate-400">Free Open Access</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hero Right Column / Interactive Terminal Card -->
+                <div class="lg:col-span-5">
+                    <div class="relative mx-auto max-w-md lg:max-w-none">
+                        <div class="absolute -inset-1 rounded-2xl bg-gradient-to-r from-teal-500 to-sky-600 opacity-30 blur-xl"></div>
+                        <div class="relative glass-card rounded-2xl p-6 sm:p-8 space-y-6">
+                            <div class="flex items-center justify-between border-b border-slate-700/60 pb-4">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+                                    <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+                                    <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
+                                </div>
+                                <span class="text-xs font-mono text-teal-400 bg-teal-950/80 px-2.5 py-1 rounded-md border border-teal-800">MIL Engine v4.2 Active</span>
+                            </div>
+
+                            <div class="space-y-4 font-mono text-xs sm:text-sm">
+                                <div class="p-3 bg-slate-900/90 rounded-xl border border-slate-800">
+                                    <div class="text-slate-400 mb-1">&gt; Analyzing headline source...</div>
+                                    <div class="text-yellow-400 font-semibold">&quot;BREAKING: Unverified AI bot creates 10k synthetic blogs overnight&quot;</div>
+                                </div>
+
+                                <div class="space-y-2">
+                                    <div class="flex justify-between text-xs text-slate-300">
+                                        <span>Clickbait Severity</span>
+                                        <span class="text-amber-400 font-bold">Moderate (68%)</span>
+                                    </div>
+                                    <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                                        <div class="bg-amber-400 h-full w-[68%]"></div>
+                                    </div>
+
+                                    <div class="flex justify-between text-xs text-slate-300 pt-1">
+                                        <span>Source Verification Check</span>
+                                        <span class="text-teal-400 font-bold">Passed (3 Citations)</span>
+                                    </div>
+                                    <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                                        <div class="bg-teal-400 h-full w-[88%]"></div>
+                                    </div>
+                                </div>
+
+                                <div class="p-3 bg-teal-950/40 border border-teal-800/60 rounded-xl text-teal-200 text-xs flex items-start gap-2">
+                                    <i data-lucide="check-circle-2" class="w-4 h-4 text-teal-400 mt-0.5 shrink-0"></i>
+                                    <span><strong>MIL Diagnosis:</strong> High viral emotion flags detected. Exercise lateral reading before re-sharing.</span>
+                                </div>
+                            </div>
+
+                            <div class="pt-2 flex items-center justify-between text-xs text-slate-400">
+                                <span class="flex items-center gap-1"><i data-lucide="award" class="w-4 h-4 text-amber-400"></i> MIL Badge 101</span>
+                                <span class="text-teal-400 font-semibold cursor-pointer hover:underline" onclick="document.getElementById('courses').scrollIntoView({behavior:'smooth'})">Start Module 1 &rarr;</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive MIL Tool / News Analyzer Sandbox -->
+    <section id="sandbox" class="py-20 bg-slate-900 border-y border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto space-y-4 mb-12">
+                <span class="text-xs font-bold tracking-widest text-teal-400 uppercase bg-teal-950 px-3 py-1 rounded-full border border-teal-800">Interactive Lab Tool</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white">MIL News & Media Credibility Sandbox</h2>
+                <p class="text-slate-300 text-base sm:text-lg">Test headlines or social media claims in real time. Learn how MIL criteria evaluate sensationalism, source transparency, and synthetic media indicators.</p>
+            </div>
+
+            <div class="bg-slate-950 rounded-2xl border border-slate-800 p-6 lg:p-8 shadow-2xl max-w-4xl mx-auto">
+                
+                <!-- Preset Sample Selector -->
+                <div class="mb-6">
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Try a Sample Claim or Headline:</label>
+                    <div class="flex flex-wrap gap-2">
+                        <button onclick="loadSample(1)" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-2 rounded-lg transition border border-slate-700">
+                            ⚠️ "Miracle Fruit Completely Cures Diabetes in 48 Hours!"
+                        </button>
+                        <button onclick="loadSample(2)" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-2 rounded-lg transition border border-slate-700">
+                            📊 "Global Renewable Energy Usage Hits Record 30% in 2025 Report"
+                        </button>
+                        <button onclick="loadSample(3)" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-2 rounded-lg transition border border-slate-700">
+                            🤖 "Leaked Audio Proves AI Robots Secretly Bought Island"
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Input Field -->
+                <div class="space-y-4">
+                    <div class="relative">
+                        <textarea id="analyzerInput" rows="3" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-4 text-slate-100 placeholder-slate-500 focus:outline-none focus:border-teal-500 text-sm sm:text-base" placeholder="Paste a headline, social media post text, or news claim here..."></textarea>
+                    </div>
+                    
+                    <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+                        <div class="text-xs text-slate-400 flex items-center gap-1.5">
+                            <i data-lucide="info" class="w-4 h-4 text-teal-400"></i>
+                            <span>Simulated MIL heuristic analysis engine</span>
+                        </div>
+                        <button onclick="runAnalysis()" class="w-full sm:w-auto bg-teal-500 hover:bg-teal-600 text-slate-950 font-bold px-6 py-3 rounded-xl transition flex items-center justify-center gap-2 shadow-lg shadow-teal-500/20">
+                            <i data-lucide="search-check" class="w-5 h-5"></i>
+                            <span>Analyze Credibility</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Analysis Results Box -->
+                <div id="analyzerResults" class="hidden mt-8 pt-8 border-t border-slate-800 space-y-6">
+                    <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 bg-slate-900 p-4 rounded-xl border border-slate-800">
+                        <div>
+                            <div class="text-xs text-slate-400 font-semibold uppercase">Overall Verification Score</div>
+                            <div id="resScoreText" class="text-2xl font-black text-teal-400">85 / 100 - High Credibility</div>
+                        </div>
+                        <div id="resBadge" class="px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider bg-teal-950 text-teal-300 border border-teal-700">
+                            Reliable Reporting
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="p-4 bg-slate-900 rounded-xl border border-slate-800 space-y-2">
+                            <div class="text-xs text-slate-400 font-semibold">Sensationalism / Bias</div>
+                            <div id="metricBias" class="text-lg font-bold text-slate-200">Low</div>
+                            <p id="descBias" class="text-xs text-slate-400">Neutral tone detected, avoiding hyperbolic trigger words.</p>
+                        </div>
+                        <div class="p-4 bg-slate-900 rounded-xl border border-slate-800 space-y-2">
+                            <div class="text-xs text-slate-400 font-semibold">Source Traceability</div>
+                            <div id="metricSource" class="text-lg font-bold text-slate-200">Verified</div>
+                            <p id="descSource" class="text-xs text-slate-400">Matches published statistical reports & peer data.</p>
+                        </div>
+                        <div class="p-4 bg-slate-900 rounded-xl border border-slate-800 space-y-2">
+                            <div class="text-xs text-slate-400 font-semibold">AI/Synthetic Signal</div>
+                            <div id="metricAI" class="text-lg font-bold text-slate-200">Human-Authored</div>
+                            <p id="descAI" class="text-xs text-slate-400">No repetitive synthetic generation artifacts found.</p>
+                        </div>
+                    </div>
+
+                    <div class="p-4 bg-teal-950/30 border border-teal-800/80 rounded-xl text-xs sm:text-sm text-teal-200 flex items-start gap-3">
+                        <i data-lucide="compass" class="w-5 h-5 text-teal-400 mt-0.5 shrink-0"></i>
+                        <div>
+                            <strong class="block font-semibold mb-1 text-teal-300">Recommended Next MIL Actions:</strong>
+                            <ul class="list-disc list-inside space-y-1 text-slate-300" id="resChecklist">
+                                <li>Perform lateral reading: open 2-3 independent news outlets in new tabs.</li>
+                                <li>Check reverse image search if visual evidence is attached.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Why MIL Matters / Core Competencies -->
+    <section id="about" class="py-20 bg-slate-950">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto space-y-4 mb-16">
+                <span class="text-xs font-bold tracking-widest text-sky-400 uppercase bg-sky-950 px-3 py-1 rounded-full border border-sky-800">Core Competencies</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white">The Four Pillars of Media & Info Literacy</h2>
+                <p class="text-slate-400 text-base sm:text-lg">In an era of deepfakes, algorithmic feeds, and endless information streams, MIL skills are non-negotiable for modern citizens.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                
+                <!-- Pillar 1 -->
+                <div class="glass-card rounded-2xl p-6 hover:border-teal-500/50 transition duration-300 space-y-4 group">
+                    <div class="w-12 h-12 rounded-xl bg-teal-500/10 border border-teal-500/30 flex items-center justify-center text-teal-400 group-hover:scale-110 transition">
+                        <i data-lucide="eye" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white">Critical Evaluation</h3>
+                    <p class="text-sm text-slate-400 leading-relaxed">Deconstruct media messages, spot emotional manipulation, identify author bias, and evaluate information sources effectively.</p>
+                </div>
+
+                <!-- Pillar 2 -->
+                <div class="glass-card rounded-2xl p-6 hover:border-sky-500/50 transition duration-300 space-y-4 group">
+                    <div class="w-12 h-12 rounded-xl bg-sky-500/10 border border-sky-500/30 flex items-center justify-center text-sky-400 group-hover:scale-110 transition">
+                        <i data-lucide="bot" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white">AI & Synthetic Media</h3>
+                    <p class="text-sm text-slate-400 leading-relaxed">Understand generative AI models, detect deepfakes, analyze algorithmic echo chambers, and evaluate synthetic media ethically.</p>
+                </div>
+
+                <!-- Pillar 3 -->
+                <div class="glass-card rounded-2xl p-6 hover:border-indigo-500/50 transition duration-300 space-y-4 group">
+                    <div class="w-12 h-12 rounded-xl bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-center text-indigo-400 group-hover:scale-110 transition">
+                        <i data-lucide="lock" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white">Privacy & Digital Rights</h3>
+                    <p class="text-sm text-slate-400 leading-relaxed">Protect your personal data footprint, manage digital identity, understand data harvesting, and safeguard digital safety.</p>
+                </div>
+
+                <!-- Pillar 4 -->
+                <div class="glass-card rounded-2xl p-6 hover:border-amber-500/50 transition duration-300 space-y-4 group">
+                    <div class="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 group-hover:scale-110 transition">
+                        <i data-lucide="globe" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white">Ethical Creation</h3>
+                    <p class="text-sm text-slate-400 leading-relaxed">Produce responsible digital content, respect copyright and fair use, avoid cyberbullying, and foster healthy online dialogues.</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Course Catalog / Pathways Section -->
+    <section id="courses" class="py-20 bg-slate-900 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+                <div>
+                    <span class="text-xs font-bold tracking-widest text-teal-400 uppercase bg-teal-950 px-3 py-1 rounded-full border border-teal-800">Structured Learning Pathways</span>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-3">Explore MIL Acad Courses</h2>
+                    <p class="text-slate-400 text-base mt-1">Self-paced, interactive modules with recognized digital completion credentials.</p>
+                </div>
+
+                <!-- Category Filter Buttons -->
+                <div class="flex flex-wrap gap-2">
+                    <button onclick="filterCourses('all')" class="filter-btn active text-xs sm:text-sm font-semibold px-4 py-2 rounded-xl bg-teal-500 text-slate-950 transition">All Courses</button>
+                    <button onclick="filterCourses('foundations')" class="filter-btn text-xs sm:text-sm font-semibold px-4 py-2 rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700 transition">Foundations</button>
+                    <button onclick="filterCourses('ai-tech')" class="filter-btn text-xs sm:text-sm font-semibold px-4 py-2 rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700 transition">AI & Deepfakes</button>
+                    <button onclick="filterCourses('educators')" class="filter-btn text-xs sm:text-sm font-semibold px-4 py-2 rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700 transition">For Educators</button>
+                </div>
+            </div>
+
+            <!-- Courses Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="courseGrid">
+                
+                <!-- Course Card 1 -->
+                <div class="course-card foundations glass-card rounded-2xl overflow-hidden border border-slate-800 flex flex-col justify-between hover:border-teal-500/60 transition duration-300">
+                    <div>
+                        <div class="h-48 bg-gradient-to-tr from-teal-900 to-slate-900 p-6 flex flex-col justify-between relative">
+                            <div class="flex justify-between items-center">
+                                <span class="bg-teal-950/80 text-teal-300 text-xs font-bold px-2.5 py-1 rounded-md border border-teal-800 uppercase">Beginner</span>
+                                <span class="text-xs text-slate-300 font-medium flex items-center gap-1"><i data-lucide="clock" class="w-3.5 h-3.5"></i> 12 Hours</span>
+                            </div>
+                            <div>
+                                <i data-lucide="book-open" class="w-10 h-10 text-teal-400 mb-2"></i>
+                                <h3 class="text-xl font-bold text-white">MIL 101: Media & Information Literacy Essentials</h3>
+                            </div>
+                        </div>
+
+                        <div class="p-6 space-y-4">
+                            <p class="text-sm text-slate-300 leading-relaxed">Master the foundational skills to analyze news sources, spot bias, understand information ecosystems, and practice smart lateral reading.</p>
+                            
+                            <div class="space-y-2 text-xs text-slate-400">
+                                <div class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-teal-400"></i> Critical news evaluation techniques</div>
+                                <div class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-teal-400"></i> Spotting clickbait & sensationalism</div>
+                                <div class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-teal-400"></i> Includes verifiable digital badge</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-6 pt-0 border-t border-slate-800/60 mt-4 flex items-center justify-between">
+                        <span class="text-xs text-slate-400 font-medium">Free Access</span>
+                        <button onclick="openCourseModal('MIL 101: Essentials', 'Learn core critical evaluation models, fact-checking fundamentals, and source evaluation skills.')" class="text-sm font-semibold text-teal-400 hover:text-teal-300 flex items-center gap-1">
+                            View Syllabus &rarr;
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Course Card 2 -->
+                <div class="course-card ai-tech glass-card rounded-2xl overflow-hidden border border-slate-800 flex flex-col justify-between hover:border-teal-500/60 transition duration-300">
+                    <div>
+                        <div class="h-48 bg-gradient-to-tr from-sky-950 to-indigo-950 p-6 flex flex-col justify-between relative">
+                            <div class="flex justify-between items-center">
+                                <span class="bg-sky-950/80 text-sky-300 text-xs font-bold px-2.5 py-1 rounded-md border border-sky-800 uppercase">Intermediate</span>
+                                <span class="text-xs text-slate-300 font-medium flex items-center gap-1"><i data-lucide="clock" class="w-3.5 h-3.5"></i> 16 Hours</span>
+                            </div>
+                            <div>
+                                <i data-lucide="cpu" class="w-10 h-10 text-sky-400 mb-2"></i>
+                                <h3 class="text-xl font-bold text-white">MIL 201: Navigating AI, Deepfakes & Algorithms</h3>
+                            </div>
+                        </div>
+
+                        <div class="p-6 space-y-4">
+                            <p class="text-sm text-slate-300 leading-relaxed">Unpack how recommendation algorithms shape opinions, detect synthetic AI audio & video deepfakes, and navigate generative AI information responsibly.</p>
+                            
+                            <div class="space-y-2 text-xs text-slate-400">
+                                <div class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-sky-400"></i> Spotting AI-generated imagery & deepfakes</div>
+                                <div class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-sky-400"></i> Breaking out of filter bubbles & echo chambers</div>
+                                <div class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-sky-400"></i> Practical synthetic media forensic tools</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-6 pt-0 border-t border-slate-800/60 mt-4 flex items-center justify-between">
+                        <span class="text-xs text-slate-400 font-medium">Free Access</span>
+                        <button onclick="openCourseModal('MIL 201: AI & Deepfakes', 'Discover synthetic media forensic strategies, algorithm literacy, and prompt evaluation.')" class="text-sm font-semibold text-sky-400 hover:text-sky-300 flex items-center gap-1">
+                            View Syllabus &rarr;
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Course Card 3 -->
+                <div class="course-card foundations glass-card rounded-2xl overflow-hidden border border-slate-800 flex flex-col justify-between hover:border-teal-500/60 transition duration-300">
+                    <div>
+                        <div class="h-48 bg-gradient-to-tr from-emerald-950 to-slate-900 p-6 flex flex-col justify-between relative">
+                            <div class="flex justify-between items-center">
+                                <span class="bg-emerald-950/80 text-emerald-300 text-xs font-bold px-2.5 py-1 rounded-md border border-emerald-800 uppercase">Beginner</span>
+                                <span class="text-xs text-slate-300 font-medium flex items-center gap-1"><i data-lucide="clock" class="w-3.5 h-3.5"></i> 10 Hours</span>
+                            </div>
+                            <div>
+                                <i data-lucide="fingerprint" class="w-10 h-10 text-emerald-400 mb-2"></i>
+                                <h3 class="text-xl font-bold text-white">MIL 102: Digital Citizenship & Cyber Wellness</h3>
+                            </div>
+                        </div>
+
+                        <div class="p-6 space-y-4">
+                            <p class="text-sm text-slate-300 leading-relaxed">Learn essential digital rights, online safety, protecting personal data from tracking, managing online reputation, and ethical digital interactions.</p>
+                            
+                            <div class="space-y-2 text-xs text-slate-400">
+                                <div class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> Privacy settings & footprint management</div>
+                                <div class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> Cyberbullying defense & civil discourse</div>
+                                <div class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> Data ethics & surveillance literacy</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-6 pt-0 border-t border-slate-800/60 mt-4 flex items-center justify-between">
+                        <span class="text-xs text-slate-400 font-medium">Free Access</span>
+                        <button onclick="openCourseModal('MIL 102: Digital Citizenship', 'Explore online privacy, civil discourse, digital wellness, and personal identity security.')" class="text-sm font-semibold text-emerald-400 hover:text-emerald-300 flex items-center gap-1">
+                            View Syllabus &rarr;
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Course Card 4 -->
+                <div class="course-card educators glass-card rounded-2xl overflow-hidden border border-slate-800 flex flex-col justify-between hover:border-teal-500/60 transition duration-300">
+                    <div>
+                        <div class="h-48 bg-gradient-to-tr from-purple-950 to-slate-900 p-6 flex flex-col justify-between relative">
+                            <div class="flex justify-between items-center">
+                                <span class="bg-purple-950/80 text-purple-300 text-xs font-bold px-2.5 py-1 rounded-md border border-purple-800 uppercase">Educator Professional</span>
+                                <span class="text-xs text-slate-300 font-medium flex items-center gap-1"><i data-lucide="clock" class="w-3.5 h-3.5"></i> 20 Hours</span>
+                            </div>
+                            <div>
+                                <i data-lucide="graduation-cap" class="w-10 h-10 text-purple-400 mb-2"></i>
+                                <h3 class="text-xl font-bold text-white">MIL 301: Integrating MIL into K-12 & Higher Ed</h3>
+                            </div>
+                        </div>
+
+                        <div class="p-6 space-y-4">
+                            <p class="text-sm text-slate-300 leading-relaxed">Equip teachers and instructors with UNESCO-aligned MIL lesson plans, classroom debate kits, and assessment rubrics for media literacy.</p>
+                            
+                            <div class="space-y-2 text-xs text-slate-400">
+                                <div class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-purple-400"></i> Downloadable classroom activities</div>
+                                <div class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-purple-400"></i> Curriculum alignment guide</div>
+                                <div class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-purple-400"></i> Continuing education credits (CEU)</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-6 pt-0 border-t border-slate-800/60 mt-4 flex items-center justify-between">
+                        <span class="text-xs text-slate-400 font-medium">Free Access</span>
+                        <button onclick="openCourseModal('MIL 301: Educator Curriculum', 'Master lesson delivery, UNESCO MIL frameworks, and classroom technology integration.')" class="text-sm font-semibold text-purple-400 hover:text-purple-300 flex items-center gap-1">
+                            View Syllabus &rarr;
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Course Card 5 -->
+                <div class="course-card ai-tech glass-card rounded-2xl overflow-hidden border border-slate-800 flex flex-col justify-between hover:border-teal-500/60 transition duration-300">
+                    <div>
+                        <div class="h-48 bg-gradient-to-tr from-amber-950 to-slate-900 p-6 flex flex-col justify-between relative">
+                            <div class="flex justify-between items-center">
+                                <span class="bg-amber-950/80 text-amber-300 text-xs font-bold px-2.5 py-1 rounded-md border border-amber-800 uppercase">Advanced</span>
+                                <span class="text-xs text-slate-300 font-medium flex items-center gap-1"><i data-lucide="clock" class="w-3.5 h-3.5"></i> 18 Hours</span>
+                            </div>
+                            <div>
+                                <i data-lucide="search" class="w-10 h-10 text-amber-400 mb-2"></i>
+                                <h3 class="text-xl font-bold text-white">MIL 202: Advanced OSINT & Verification Methods</h3>
+                            </div>
+                        </div>
+
+                        <div class="p-6 space-y-4">
+                            <p class="text-sm text-slate-300 leading-relaxed">Learn Open Source Intelligence (OSINT) basics, geolocation analysis, metadata inspection, and reverse image forensics like professional fact-checkers.</p>
+                            
+                            <div class="space-y-2 text-xs text-slate-400">
+                                <div class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-amber-400"></i> Image EXIF & geolocation techniques</div>
+                                <div class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-amber-400"></i> Web archive & historic site investigation</div>
+                                <div class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-amber-400"></i> Fact-checker toolkit mastery</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-6 pt-0 border-t border-slate-800/60 mt-4 flex items-center justify-between">
+                        <span class="text-xs text-slate-400 font-medium">Free Access</span>
+                        <button onclick="openCourseModal('MIL 202: OSINT Verification', 'Hands-on digital investigation, geolocation, EXIF parsing, and open-source verification.')" class="text-sm font-semibold text-amber-400 hover:text-amber-300 flex items-center gap-1">
+                            View Syllabus &rarr;
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Course Card 6 -->
+                <div class="course-card foundations glass-card rounded-2xl overflow-hidden border border-slate-800 flex flex-col justify-between hover:border-teal-500/60 transition duration-300">
+                    <div>
+                        <div class="h-48 bg-gradient-to-tr from-pink-950 to-slate-900 p-6 flex flex-col justify-between relative">
+                            <div class="flex justify-between items-center">
+                                <span class="bg-pink-950/80 text-pink-300 text-xs font-bold px-2.5 py-1 rounded-md border border-pink-800 uppercase">Intermediate</span>
+                                <span class="text-xs text-slate-300 font-medium flex items-center gap-1"><i data-lucide="clock" class="w-3.5 h-3.5"></i> 14 Hours</span>
+                            </div>
+                            <div>
+                                <i data-lucide="share-2" class="w-10 h-10 text-pink-400 mb-2"></i>
+                                <h3 class="text-xl font-bold text-white">MIL 103: Social Media Literacy & Viral Dynamics</h3>
+                            </div>
+                        </div>
+
+                        <div class="p-6 space-y-4">
+                            <p class="text-sm text-slate-300 leading-relaxed">Examine how social media algorithms reward outrage, how influencer media operates, and how to maintain emotional balance in hyper-connected spaces.</p>
+                            
+                            <div class="space-y-2 text-xs text-slate-400">
+                                <div class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-pink-400"></i> Understanding viral persuasion psychology</div>
+                                <div class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-pink-400"></i> Influencer marketing transparency</div>
+                                <div class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-pink-400"></i> Healthy screen habits & cognitive load</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-6 pt-0 border-t border-slate-800/60 mt-4 flex items-center justify-between">
+                        <span class="text-xs text-slate-400 font-medium">Free Access</span>
+                        <button onclick="openCourseModal('MIL 103: Social Dynamics', 'Deconstruct social platforms, viral algorithms, attention mechanics, and digital wellbeing.')" class="text-sm font-semibold text-pink-400 hover:text-pink-300 flex items-center gap-1">
+                            View Syllabus &rarr;
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Diagnostic / Pathway Finder -->
+    <section id="diagnostic" class="py-20 bg-slate-950">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="glass-card rounded-3xl p-8 sm:p-12 border border-slate-800 shadow-2xl relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-64 h-64 bg-teal-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+                <div class="text-center space-y-3 mb-8">
+                    <span class="text-xs font-bold tracking-widest text-teal-400 uppercase bg-teal-950 px-3 py-1 rounded-full border border-teal-800">1-Minute Pathway Finder</span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-white">Where Should You Start Your MIL Journey?</h2>
+                    <p class="text-slate-400 text-sm sm:text-base">Answer 2 quick questions to get a personalized course recommendation.</p>
+                </div>
+
+                <!-- Quiz Form Step 1 -->
+                <div id="quizStep1" class="space-y-6">
+                    <label class="block text-sm font-bold text-slate-200 text-center">Question 1: What is your primary role or learning objective?</label>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <button onclick="selectQuizRole('student')" class="quiz-btn p-4 rounded-xl bg-slate-900 border border-slate-800 hover:border-teal-500 text-slate-200 text-sm font-semibold text-center transition">
+                            🎓 Student / Citizen
+                        </button>
+                        <button onclick="selectQuizRole('educator')" class="quiz-btn p-4 rounded-xl bg-slate-900 border border-slate-800 hover:border-teal-500 text-slate-200 text-sm font-semibold text-center transition">
+                            🏫 Educator / Instructor
+                        </button>
+                        <button onclick="selectQuizRole('tech')" class="quiz-btn p-4 rounded-xl bg-slate-900 border border-slate-800 hover:border-teal-500 text-slate-200 text-sm font-semibold text-center transition">
+                            🤖 AI & Tech Enthusiast
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Quiz Form Step 2 (Hidden by default) -->
+                <div id="quizStep2" class="hidden space-y-6">
+                    <label class="block text-sm font-bold text-slate-200 text-center">Question 2: What media challenge concerns you most?</label>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <button onclick="showQuizResult('fake-news')" class="p-4 rounded-xl bg-slate-900 border border-slate-800 hover:border-teal-500 text-slate-200 text-sm font-semibold text-center transition">
+                            📰 Spotting Fake News & Misinformation
+                        </button>
+                        <button onclick="showQuizResult('deepfakes')" class="p-4 rounded-xl bg-slate-900 border border-slate-800 hover:border-teal-500 text-slate-200 text-sm font-semibold text-center transition">
+                            🎭 AI Deepfakes & Synthetic Media
+                        </button>
+                        <button onclick="showQuizResult('privacy')" class="p-4 rounded-xl bg-slate-900 border border-slate-800 hover:border-teal-500 text-slate-200 text-sm font-semibold text-center transition">
+                            🔒 Online Privacy & Data Tracking
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Quiz Result (Hidden by default) -->
+                <div id="quizResult" class="hidden text-center space-y-6 pt-4">
+                    <div class="inline-flex p-3 rounded-2xl bg-teal-500/20 text-teal-400">
+                        <i data-lucide="sparkles" class="w-8 h-8"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold text-white mb-2" id="recommendedCourseTitle">Recommended: MIL 101 Media Essentials</h3>
+                        <p class="text-slate-300 text-sm max-w-lg mx-auto" id="recommendedCourseDesc">This course builds strong foundational skills in lateral reading, source evaluation, and spotting online misinformation.</p>
+                    </div>
+                    <div class="flex justify-center gap-4">
+                        <button onclick="toggleModal('loginModal')" class="bg-teal-500 hover:bg-teal-600 text-slate-950 font-bold px-6 py-3 rounded-xl transition">
+                            Enroll in Recommended Course
+                        </button>
+                        <button onclick="resetQuiz()" class="text-xs text-slate-400 hover:text-white underline py-3">
+                            Start Quiz Over
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Digital Credentials & Badging Section -->
+    <section id="badging" class="py-20 bg-slate-900 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <div class="lg:col-span-6 space-y-6">
+                    <span class="text-xs font-bold tracking-widest text-amber-400 uppercase bg-amber-950 px-3 py-1 rounded-full border border-amber-800">Verifiable Badges</span>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-white">Earn Industry-Recognized MIL Digital Credentials</h2>
+                    <p class="text-slate-300 leading-relaxed">Validate your critical thinking skills with tamper-proof digital badges. Embed them directly onto your LinkedIn profile, digital CV, or university portfolio.</p>
+                    
+                    <div class="space-y-4 pt-2">
+                        <div class="flex items-start gap-3">
+                            <div class="w-8 h-8 rounded-lg bg-teal-500/10 border border-teal-500/30 flex items-center justify-center text-teal-400 shrink-0 mt-1">
+                                <i data-lucide="check-circle-2" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-base font-bold text-white">Verifiable Metadata</h4>
+                                <p class="text-xs text-slate-400">Includes course outcomes, learning hours, and issuing authority verification.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-3">
+                            <div class="w-8 h-8 rounded-lg bg-sky-500/10 border border-sky-500/30 flex items-center justify-center text-sky-400 shrink-0 mt-1">
+                                <i data-lucide="share-2" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-base font-bold text-white">1-Click LinkedIn Integration</h4>
+                                <p class="text-xs text-slate-400">Seamlessly add achievements to your professional profile and resume.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Badge Display Showcase -->
+                <div class="lg:col-span-6 grid grid-cols-2 gap-4">
+                    
+                    <div class="glass-card p-6 rounded-2xl border border-slate-800 text-center space-y-3 hover:scale-105 transition transform">
+                        <div class="w-16 h-16 mx-auto rounded-full bg-gradient-to-tr from-teal-500 to-emerald-500 flex items-center justify-center text-slate-950 font-extrabold shadow-lg shadow-teal-500/30">
+                            <i data-lucide="shield" class="w-8 h-8"></i>
+                        </div>
+                        <h4 class="text-sm font-bold text-white">MIL Core Specialist</h4>
+                        <span class="text-[10px] text-teal-400 bg-teal-950 px-2 py-0.5 rounded-full border border-teal-800 uppercase font-semibold">Level 1 Credential</span>
+                    </div>
+
+                    <div class="glass-card p-6 rounded-2xl border border-slate-800 text-center space-y-3 hover:scale-105 transition transform">
+                        <div class="w-16 h-16 mx-auto rounded-full bg-gradient-to-tr from-sky-500 to-indigo-500 flex items-center justify-center text-slate-950 font-extrabold shadow-lg shadow-sky-500/30">
+                            <i data-lucide="cpu" class="w-8 h-8"></i>
+                        </div>
+                        <h4 class="text-sm font-bold text-white">AI & Forensic Analyst</h4>
+                        <span class="text-[10px] text-sky-400 bg-sky-950 px-2 py-0.5 rounded-full border border-sky-800 uppercase font-semibold">Level 2 Credential</span>
+                    </div>
+
+                    <div class="glass-card p-6 rounded-2xl border border-slate-800 text-center space-y-3 hover:scale-105 transition transform">
+                        <div class="w-16 h-16 mx-auto rounded-full bg-gradient-to-tr from-purple-500 to-pink-500 flex items-center justify-center text-slate-950 font-extrabold shadow-lg shadow-purple-500/30">
+                            <i data-lucide="award" class="w-8 h-8"></i>
+                        </div>
+                        <h4 class="text-sm font-bold text-white">Master Educator</h4>
+                        <span class="text-[10px] text-purple-400 bg-purple-950 px-2 py-0.5 rounded-full border border-purple-800 uppercase font-semibold">Professional Badge</span>
+                    </div>
+
+                    <div class="glass-card p-6 rounded-2xl border border-slate-800 text-center space-y-3 hover:scale-105 transition transform">
+                        <div class="w-16 h-16 mx-auto rounded-full bg-gradient-to-tr from-amber-500 to-orange-500 flex items-center justify-center text-slate-950 font-extrabold shadow-lg shadow-amber-500/30">
+                            <i data-lucide="globe" class="w-8 h-8"></i>
+                        </div>
+                        <h4 class="text-sm font-bold text-white">Global Ambassador</h4>
+                        <span class="text-[10px] text-amber-400 bg-amber-950 px-2 py-0.5 rounded-full border border-amber-800 uppercase font-semibold">Honorary Badge</span>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Educator & Institutional Hub -->
+    <section id="educators" class="py-20 bg-slate-950">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-gradient-to-r from-slate-900 via-teal-950/40 to-slate-900 rounded-3xl p-8 sm:p-12 border border-slate-800 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                
+                <div class="lg:col-span-8 space-y-4">
+                    <span class="text-xs font-bold tracking-widest text-purple-400 uppercase bg-purple-950 px-3 py-1 rounded-full border border-purple-800">For Schools & Universities</span>
+                    <h2 class="text-3xl font-extrabold text-white">Bring MIL Acad to Your School or Institution</h2>
+                    <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+                        Access free institutional LMS integrations, teacher training kits, classroom slide decks, and automated student progress analytics.
+                    </p>
+                    <div class="flex flex-wrap gap-4 text-xs font-semibold text-slate-400 pt-2">
+                        <span class="flex items-center gap-1.5"><i data-lucide="check" class="text-teal-400 w-4 h-4"></i> Canvas / Moodle LMS LTI Support</span>
+                        <span class="flex items-center gap-1.5"><i data-lucide="check" class="text-teal-400 w-4 h-4"></i> UNESCO MIL Curriculum Alignment</span>
+                        <span class="flex items-center gap-1.5"><i data-lucide="check" class="text-teal-400 w-4 h-4"></i> Student Analytics Dashboard</span>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-4 flex flex-col sm:flex-row lg:flex-col gap-3">
+                    <button onclick="toggleModal('loginModal')" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3.5 px-6 rounded-xl transition text-center shadow-lg shadow-purple-600/20">
+                        Request Institutional Access
+                    </button>
+                    <button onclick="alert('Downloading Educator Resource Kit PDF...')" class="w-full bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold py-3.5 px-6 rounded-xl border border-slate-700 transition text-center flex items-center justify-center gap-2">
+                        <i data-lucide="download" class="w-4 h-4"></i> Download Curriculum Kit
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="bg-slate-950 border-t border-slate-800 text-slate-400 text-sm pt-16 pb-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
+                
+                <!-- Brand Info -->
+                <div class="lg:col-span-2 space-y-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-teal-500 to-sky-500 flex items-center justify-center text-white font-bold">
+                            <i data-lucide="shield-check" class="w-5 h-5"></i>
+                        </div>
+                        <span class="font-extrabold text-2xl text-white">MIL <span class="text-teal-400">Acad</span></span>
+                    </div>
+                    <p class="text-xs text-slate-400 max-w-sm leading-relaxed">
+                        MIL Acad is an open digital education initiative empowering global citizens with essential Media and Information Literacy skills for the modern AI landscape.
+                    </p>
+                    <div class="flex gap-4 text-slate-400">
+                        <a href="#" class="hover:text-teal-400"><i data-lucide="twitter" class="w-5 h-5"></i></a>
+                        <a href="#" class="hover:text-teal-400"><i data-lucide="github" class="w-5 h-5"></i></a>
+                        <a href="#" class="hover:text-teal-400"><i data-lucide="youtube" class="w-5 h-5"></i></a>
+                        <a href="#" class="hover:text-teal-400"><i data-lucide="linkedin" class="w-5 h-5"></i></a>
+                    </div>
+                </div>
+
+                <!-- Column 1 -->
+                <div>
+                    <h4 class="text-white font-semibold text-xs uppercase tracking-wider mb-4">Learning Pathways</h4>
+                    <ul class="space-y-2.5 text-xs">
+                        <li><a href="#courses" class="hover:text-teal-400">MIL 101 Essentials</a></li>
+                        <li><a href="#courses" class="hover:text-teal-400">AI & Deepfake Forensics</a></li>
+                        <li><a href="#courses" class="hover:text-teal-400">Digital Privacy & Rights</a></li>
+                        <li><a href="#courses" class="hover:text-teal-400">OSINT Verification</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 2 -->
+                <div>
+                    <h4 class="text-white font-semibold text-xs uppercase tracking-wider mb-4">Tools & Hubs</h4>
+                    <ul class="space-y-2.5 text-xs">
+                        <li><a href="#sandbox" class="hover:text-teal-400">News Analyzer Sandbox</a></li>
+                        <li><a href="#diagnostic" class="hover:text-teal-400">1-Min Skill Diagnostic</a></li>
+                        <li><a href="#educators" class="hover:text-teal-400">Educator Portal</a></li>
+                        <li><a href="#badging" class="hover:text-teal-400">Digital Badges</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 3 -->
+                <div>
+                    <h4 class="text-white font-semibold text-xs uppercase tracking-wider mb-4">Platform</h4>
+                    <ul class="space-y-2.5 text-xs">
+                        <li><a href="#about" class="hover:text-teal-400">About Initiative</a></li>
+                        <li><a href="#" onclick="toggleModal('loginModal')" class="hover:text-teal-400">Student Portal</a></li>
+                        <li><a href="#" class="hover:text-teal-400">Terms of Service</a></li>
+                        <li><a href="#" class="hover:text-teal-400">Privacy Policy</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <!-- Bottom Copyright -->
+            <div class="pt-8 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
+                <p>&copy; 2026 MIL Acad. Inspired by NetAcad open learning standards for global literacy.</p>
+                <div class="flex items-center gap-6">
+                    <span class="hover:text-slate-400 cursor-pointer">Security Center</span>
+                    <span class="hover:text-slate-400 cursor-pointer">Accessibility</span>
+                    <span class="hover:text-slate-400 cursor-pointer">Cookie Preferences</span>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+
+    <!-- Course Detail Modal -->
+    <div id="courseModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-lg w-full p-6 space-y-6 shadow-2xl relative">
+            <button onclick="toggleModal('courseModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+            <div class="space-y-2">
+                <span class="text-xs font-bold text-teal-400 uppercase tracking-wider">Course Syllabus Preview</span>
+                <h3 id="modalCourseTitle" class="text-2xl font-bold text-white">Course Title</h3>
+                <p id="modalCourseDesc" class="text-sm text-slate-300">Course description placeholder.</p>
+            </div>
+            
+            <div class="space-y-3 border-t border-slate-800 pt-4">
+                <h4 class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Module Breakdown:</h4>
+                <div class="space-y-2 text-xs text-slate-300">
+                    <div class="p-3 bg-slate-950 rounded-xl border border-slate-800 flex justify-between items-center">
+                        <span>Module 1: Foundations & Core Terminology</span>
+                        <span class="text-teal-400">Complete</span>
+                    </div>
+                    <div class="p-3 bg-slate-950 rounded-xl border border-slate-800 flex justify-between items-center">
+                        <span>Module 2: Practical Forensics & Case Studies</span>
+                        <span class="text-slate-400">4 Lessons</span>
+                    </div>
+                    <div class="p-3 bg-slate-950 rounded-xl border border-slate-800 flex justify-between items-center">
+                        <span>Module 3: Capstone Evaluation Project</span>
+                        <span class="text-amber-400">Badge Exam</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex gap-3 pt-2">
+                <button onclick="toggleModal('courseModal'); toggleModal('loginModal');" class="w-full bg-teal-500 hover:bg-teal-600 text-slate-950 font-bold py-3 rounded-xl transition">
+                    Enroll Now Free
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login / Sign Up Modal -->
+    <div id="loginModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-md w-full p-6 sm:p-8 space-y-6 shadow-2xl relative">
+            <button onclick="toggleModal('loginModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+            
+            <div class="text-center space-y-1">
+                <div class="w-10 h-10 rounded-xl bg-teal-500/10 border border-teal-500/30 text-teal-400 mx-auto flex items-center justify-center mb-3">
+                    <i data-lucide="user-check" class="w-5 h-5"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-white">MIL Acad Student Portal</h3>
+                <p class="text-xs text-slate-400">Access your courses, track progress, and view badges</p>
+            </div>
+
+            <form onsubmit="handleLogin(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">Email / Student ID</label>
+                    <input type="email" required placeholder="student@netacad-mil.org" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-teal-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">Password</label>
+                    <input type="password" required placeholder="••••••••" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-teal-500">
+                </div>
+                <div class="flex items-center justify-between text-xs text-slate-400">
+                    <label class="flex items-center gap-2">
+                        <input type="checkbox" class="rounded bg-slate-950 border-slate-800 text-teal-500 focus:ring-0"> Remember me
+                    </label>
+                    <a href="#" class="text-teal-400 hover:underline">Forgot password?</a>
+                </div>
+                <button type="submit" class="w-full bg-teal-500 hover:bg-teal-600 text-slate-950 font-bold py-3 rounded-xl transition">
+                    Sign In to Learning Portal
+                </button>
+            </form>
+
+            <div class="text-center text-xs text-slate-400 border-t border-slate-800 pt-4">
+                New learner? <a href="#" onclick="alert('Account creation open! Fill in details above to register.');" class="text-teal-400 font-semibold hover:underline">Create a free account</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search Modal -->
+    <div id="searchModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-start justify-center pt-20 p-4">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-2xl w-full p-4 space-y-4 shadow-2xl relative">
+            <div class="relative">
+                <i data-lucide="search" class="w-5 h-5 absolute left-4 top-3.5 text-slate-400"></i>
+                <input type="text" id="searchInput" onkeyup="handleSearch()" placeholder="Search courses, modules, fact-checking tools..." class="w-full bg-slate-950 border border-slate-800 rounded-xl pl-12 pr-4 py-3 text-sm text-slate-100 focus:outline-none focus:border-teal-500">
+                <button onclick="toggleModal('searchModal')" class="absolute right-3 top-3 text-xs bg-slate-800 text-slate-400 px-2 py-1 rounded">ESC</button>
+            </div>
+            <div id="searchResults" class="space-y-2 text-xs text-slate-300 max-h-60 overflow-y-auto">
+                <div class="p-3 bg-slate-950 rounded-xl border border-slate-800 hover:border-teal-500 cursor-pointer" onclick="toggleModal('searchModal'); document.getElementById('courses').scrollIntoView();">
+                    <div class="font-bold text-white">MIL 101 Media Essentials</div>
+                    <div class="text-slate-400 text-[11px]">Foundational critical news evaluation course</div>
+                </div>
+                <div class="p-3 bg-slate-950 rounded-xl border border-slate-800 hover:border-teal-500 cursor-pointer" onclick="toggleModal('searchModal'); document.getElementById('sandbox').scrollIntoView();">
+                    <div class="font-bold text-white">Interactive News Credibility Analyzer</div>
+                    <div class="text-slate-400 text-[11px]">Lab sandbox tool for detecting sensationalism and bias</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Toggle Mobile Navigation
+        function toggleMobileNav() {
+            const nav = document.getElementById('mobileNav');
+            nav.classList.toggle('hidden');
+        }
+
+        // Modal Handler
+        function toggleModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.toggle('hidden');
+            }
+        }
+
+        // Open Course Detail Modal with customized content
+        function openCourseModal(title, description) {
+            document.getElementById('modalCourseTitle').innerText = title;
+            document.getElementById('modalCourseDesc').innerText = description;
+            toggleModal('courseModal');
+        }
+
+        // Filter Courses Grid
+        function filterCourses(category) {
+            const cards = document.querySelectorAll('.course-card');
+            const btns = document.querySelectorAll('.filter-btn');
+
+            btns.forEach(btn => {
+                btn.classList.remove('bg-teal-500', 'text-slate-950');
+                btn.classList.add('bg-slate-800', 'text-slate-300');
+            });
+
+            event.target.classList.remove('bg-slate-800', 'text-slate-300');
+            event.target.classList.add('bg-teal-500', 'text-slate-950');
+
+            cards.forEach(card => {
+                if (category === 'all' || card.classList.contains(category)) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Interactive News Analyzer Lab Tool logic
+        function loadSample(sampleId) {
+            const input = document.getElementById('analyzerInput');
+            if (sampleId === 1) {
+                input.value = "Miracle Fruit Completely Cures Diabetes in 48 Hours According to Secret Study!";
+            } else if (sampleId === 2) {
+                input.value = "Global Renewable Energy Usage Hits Record 30% in 2025 Annual International Energy Report";
+            } else if (sampleId === 3) {
+                input.value = "LEAKED AUDIO: Secret AI Bot Network Privately Purchases Pacific Island Without Human Consent!";
+            }
+        }
+
+        function runAnalysis() {
+            const text = document.getElementById('analyzerInput').value.trim();
+            if (!text) {
+                alert("Please enter or select a headline to analyze!");
+                return;
+            }
+
+            const results = document.getElementById('analyzerResults');
+            results.classList.remove('hidden');
+
+            const scoreText = document.getElementById('resScoreText');
+            const badge = document.getElementById('resBadge');
+            const metricBias = document.getElementById('metricBias');
+            const descBias = document.getElementById('descBias');
+            const metricSource = document.getElementById('metricSource');
+            const descSource = document.getElementById('descSource');
+            const metricAI = document.getElementById('metricAI');
+            const descAI = document.getElementById('descAI');
+
+            const lower = text.toLowerCase();
+
+            if (lower.includes('miracle') || lower.includes('cures') || lower.includes('secret study')) {
+                scoreText.innerText = "28 / 100 - High Risk / Unverified";
+                scoreText.className = "text-2xl font-black text-rose-400";
+                badge.innerText = "Health Misinformation Flags";
+                badge.className = "px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider bg-rose-950 text-rose-300 border border-rose-800";
+                
+                metricBias.innerText = "Severe (92%)";
+                metricBias.className = "text-lg font-bold text-rose-400";
+                descBias.innerText = "Employs clickbait trigger words and impossible claims.";
+                
+                metricSource.innerText = "Unverified Source";
+                metricSource.className = "text-lg font-bold text-rose-400";
+                descSource.innerText = "No medical peer-reviewed citations detected.";
+
+                metricAI.innerText = "Low Synthetic Signal";
+                metricAI.className = "text-lg font-bold text-slate-300";
+                descAI.innerText = "Standard sensational spam pattern.";
+            } else if (lower.includes('leaked audio') || lower.includes('secretly bought') || lower.includes('bot')) {
+                scoreText.innerText = "42 / 100 - Deepfake / AI Rumor Flag";
+                scoreText.className = "text-2xl font-black text-amber-400";
+                badge.innerText = "Synthetic Audio Suspicion";
+                badge.className = "px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider bg-amber-950 text-amber-300 border border-amber-800";
+                
+                metricBias.innerText = "High Outrage Index";
+                metricBias.className = "text-lg font-bold text-amber-400";
+                descBias.innerText = "Uses fear-inducing conspiratorial tropes.";
+
+                metricSource.innerText = "Anonymous Leak";
+                metricSource.className = "text-lg font-bold text-amber-400";
+                descSource.innerText = "Lacks verifiable land registry or official record.";
+
+                metricAI.innerText = "High AI Voice Artifacts";
+                metricAI.className = "text-lg font-bold text-amber-400";
+                descAI.innerText = "Contains spectral hallmarks of neural text-to-speech clone.";
+            } else {
+                scoreText.innerText = "88 / 100 - High Credibility";
+                scoreText.className = "text-2xl font-black text-teal-400";
+                badge.innerText = "Standard Verified News";
+                badge.className = "px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider bg-teal-950 text-teal-300 border border-teal-800";
+                
+                metricBias.innerText = "Neutral (12%)";
+                metricBias.className = "text-lg font-bold text-teal-400";
+                descBias.innerText = "Factual reporting style with quantitative figures.";
+
+                metricSource.innerText = "Institutional Data";
+                metricSource.className = "text-lg font-bold text-teal-400";
+                descSource.innerText = "Corroborated by global energy database archives.";
+
+                metricAI.innerText = "Human Authored";
+                metricAI.className = "text-lg font-bold text-teal-400";
+                descAI.innerText = "Natural syntax and standard journalist structure.";
+            }
+
+            results.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Quiz Logic
+        let quizRole = '';
+        function selectQuizRole(role) {
+            quizRole = role;
+            document.getElementById('quizStep1').classList.add('hidden');
+            document.getElementById('quizStep2').classList.remove('hidden');
+        }
+
+        function showQuizResult(interest) {
+            document.getElementById('quizStep2').classList.add('hidden');
+            document.getElementById('quizResult').classList.remove('hidden');
+
+            const title = document.getElementById('recommendedCourseTitle');
+            const desc = document.getElementById('recommendedCourseDesc');
+
+            if (quizRole === 'educator') {
+                title.innerText = "Recommended: MIL 301 Educator Curriculum Kit";
+                desc.innerText = "Designed for teachers and facilitators to integrate media literacy, lesson plans, and classroom debates seamlessly.";
+            } else if (interest === 'deepfakes') {
+                title.innerText = "Recommended: MIL 201 AI, Deepfakes & Algorithmic Ethics";
+                desc.innerText = "Explore deepfake forensic analysis, algorithm filter bubbles, and synthetic media spotter toolkits.";
+            } else {
+                title.innerText = "Recommended: MIL 101 Media Essentials";
+                desc.innerText = "Master core critical thinking, source verification, and lateral reading strategies to navigate daily news with ease.";
+            }
+        }
+
+        function resetQuiz() {
+            document.getElementById('quizResult').classList.add('hidden');
+            document.getElementById('quizStep2').classList.add('hidden');
+            document.getElementById('quizStep1').classList.remove('hidden');
+        }
+
+        // Login Handler
+        function handleLogin(event) {
+            event.preventDefault();
+            alert("Login successful! Redirecting to MIL Acad Learning Dashboard...");
+            toggleModal('loginModal');
+        }
+    </script>
+</body>
+</html>
