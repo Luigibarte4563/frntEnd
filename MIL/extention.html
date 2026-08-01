@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-slate-950 text-slate-100">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VeriFact AI - Community-Backed On-Demand Fact Checker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#eef2ff',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.6);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 9999px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+    </style>
+</head>
+
+<body class="h-full flex flex-col font-sans antialiased bg-slate-950 text-slate-100 overflow-x-hidden">
+
+    <!-- BROWSER TOOLBAR -->
+    <header
+        class="bg-slate-900 border-b border-slate-800 px-4 py-2 flex items-center justify-between text-xs text-slate-400 select-none z-30 sticky top-0">
+        <div class="flex items-center gap-3 w-1/4">
+            <div class="flex items-center gap-1.5">
+                <span class="w-3 h-3 rounded-full bg-rose-500/80 inline-block"></span>
+                <span class="w-3 h-3 rounded-full bg-amber-500/80 inline-block"></span>
+                <span class="w-3 h-3 rounded-full bg-emerald-500/80 inline-block"></span>
+            </div>
+            <div class="flex items-center gap-2 text-slate-500 ml-2">
+                <i data-lucide="chevron-left" class="w-4 h-4 cursor-pointer hover:text-slate-300"></i>
+                <i data-lucide="chevron-right" class="w-4 h-4 cursor-pointer hover:text-slate-300"></i>
+                <i data-lucide="rotate-cw" class="w-3.5 h-3.5 cursor-pointer hover:text-slate-300"></i>
+            </div>
+        </div>
+
+        <!-- URL Bar -->
+        <div class="flex-1 max-w-xl mx-4">
+            <div
+                class="bg-slate-950 border border-slate-800 rounded-full px-4 py-1.5 flex items-center gap-2 text-slate-300 shadow-inner">
+                <i data-lucide="lock" class="w-3.5 h-3.5 text-emerald-400"></i>
+                <span class="text-slate-500">https://</span>
+                <span class="font-medium text-slate-200">newsfeed.social</span>
+                <span class="text-slate-500">/trending-posts</span>
+            </div>
+        </div>
+
+        <!-- Extension Toggle Area -->
+        <div class="flex items-center justify-end gap-3 w-1/4">
+            <div class="flex items-center gap-2 bg-slate-800/60 p-1 px-2 rounded-lg border border-slate-700/50">
+                <button id="extensionToggleBtn" onclick="toggleExtensionPopup()"
+                    class="relative p-1.5 rounded-md hover:bg-slate-700/70 text-indigo-400 transition-all focus:outline-none group">
+                    <i data-lucide="shield"
+                        class="w-5 h-5 text-indigo-400 group-hover:scale-110 transition-transform"></i>
+                    <span id="extensionBadgeCount"
+                        class="absolute -top-1 -right-1 bg-indigo-600 text-white font-bold text-[9px] w-4 h-4 rounded-full flex items-center justify-center border border-slate-900">3</span>
+                </button>
+                <button class="p-1.5 rounded-md hover:bg-slate-700/70 text-slate-400"><i data-lucide="puzzle"
+                        class="w-4 h-4"></i></button>
+            </div>
+            <div
+                class="w-7 h-7 rounded-full bg-indigo-600 flex items-center justify-center font-bold text-white text-xs">
+                LB
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN FEED WRAPPER -->
+    <div class="flex-1 flex relative overflow-hidden">
+
+        <main class="flex-1 overflow-y-auto px-4 py-8 max-w-4xl mx-auto w-full space-y-6 pb-24">
+
+            <!-- Page Header Banner -->
+            <div
+                class="flex items-center justify-between bg-slate-900/60 p-4 rounded-2xl border border-slate-800/80 mb-6">
+                <div class="flex items-center gap-3">
+                    <div class="p-2.5 bg-indigo-500/10 rounded-xl text-indigo-400 border border-indigo-500/20">
+                        <i data-lucide="users" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-base font-semibold text-slate-100">Global News Stream</h1>
+                        <p class="text-xs text-slate-400">VeriFact AI + Community Evidence Hub Active</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    <button onclick="analyzeAllPosts()"
+                        class="px-3.5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-medium rounded-xl transition-all flex items-center gap-2 shadow-lg shadow-indigo-600/20 active:scale-95">
+                        <i data-lucide="sparkles" class="w-4 h-4"></i> Analyze All Posts
+                    </button>
+                </div>
+            </div>
+
+            <!-- POST 1 -->
+            <article id="post-1"
+                class="bg-slate-900/90 rounded-2xl border border-slate-800 p-5 shadow-xl relative transition-all duration-200 hover:border-slate-700">
+
+                <!-- Post Header -->
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center gap-3">
+                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80"
+                            class="w-10 h-10 rounded-full object-cover border border-slate-700" alt="Avatar">
+                        <div>
+                            <div class="flex items-center gap-1.5">
+                                <h3 class="font-semibold text-sm text-slate-200">TechPulse Today</h3>
+                                <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-slate-500"></i>
+                            </div>
+                            <p class="text-xs text-slate-500">Posted 25 mins ago • Viral News</p>
+                        </div>
+                    </div>
+
+                    <!-- Analyze Action Button -->
+                    <div class="flex items-center gap-2">
+                        <div id="badge-container-1" class="hidden"></div>
+                        <button id="analyze-btn-1" onclick="analyzeSinglePost(1)"
+                            class="px-3.5 py-1.5 bg-indigo-600/90 hover:bg-indigo-500 text-white text-xs font-semibold rounded-xl border border-indigo-400/30 transition-all flex items-center gap-1.5 shadow-md shadow-indigo-600/20 active:scale-95">
+                            <i data-lucide="shield-check" class="w-4 h-4"></i>
+                            <span id="analyze-btn-text-1">Analyze Post</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Post Content -->
+                <h2 class="text-lg font-medium text-slate-100 mb-2 leading-snug">
+                    🚨 BREAKING: NASA confirms Earth has captured a second moon in permanent orbit, visible to the naked
+                    eye starting tonight!
+                </h2>
+                <p class="text-sm text-slate-400 mb-4 line-clamp-2">
+                    Astronomers at the Jet Propulsion Laboratory announced this afternoon that a giant rogue asteroid
+                    named 2026-XQ has permanently locked into Earth's gravitational field, forming a twin moon system...
+                </p>
+
+                <!-- Post Image -->
+                <div class="relative rounded-xl overflow-hidden mb-4 border border-slate-800">
+                    <img src="https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?w=800&auto=format&fit=crop&q=80"
+                        class="w-full h-52 object-cover" alt="Space Moon Image">
+                </div>
+
+                <!-- AI Analysis Box -->
+                <div id="analysis-box-1"
+                    class="bg-slate-950/60 border border-slate-800/80 rounded-xl p-3.5 mb-4 flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <div id="status-icon-1" class="p-2 bg-slate-800 text-slate-400 rounded-lg shrink-0">
+                            <i data-lucide="help-circle" class="w-4 h-4"></i>
+                        </div>
+                        <div>
+                            <p id="status-title-1" class="text-xs font-medium text-slate-300">Not Analyzed Yet</p>
+                            <p id="status-desc-1" class="text-[11px] text-slate-500">Click "Analyze Post" above to
+                                inspect accuracy.</p>
+                        </div>
+                    </div>
+                    <button id="breakdown-btn-1" onclick="openAIReviewModal(1)"
+                        class="hidden px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-medium rounded-lg transition-colors border border-slate-700 shrink-0">
+                        View Breakdown
+                    </button>
+                </div>
+
+                <!-- Engagement Bar & Community Proof Shortcut -->
+                <div class="flex items-center justify-between text-slate-400 text-xs pt-2 border-t border-slate-800/80">
+                    <div class="flex items-center gap-6">
+                        <span class="flex items-center gap-1.5"><i data-lucide="heart" class="w-4 h-4"></i> 14.2K</span>
+                        <span class="flex items-center gap-1.5"><i data-lucide="message-square" class="w-4 h-4"></i>
+                            3.8K</span>
+                    </div>
+
+                    <!-- Community Evidence Link -->
+                    <button onclick="openCommunityEvidence(1)"
+                        class="flex items-center gap-1.5 px-3 py-1 bg-indigo-950/60 hover:bg-indigo-900/60 text-indigo-300 rounded-lg border border-indigo-800/50 transition-colors">
+                        <i data-lucide="file-check-2" class="w-3.5 h-3.5 text-indigo-400"></i>
+                        <span>Community Evidence (<strong id="evidence-count-1">2</strong>)</span>
+                    </button>
+                </div>
+            </article>
+
+            <!-- POST 2 -->
+            <article id="post-2"
+                class="bg-slate-900/90 rounded-2xl border border-slate-800 p-5 shadow-xl relative transition-all duration-200 hover:border-slate-700">
+
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center gap-3">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80"
+                            class="w-10 h-10 rounded-full object-cover border border-slate-700" alt="Avatar">
+                        <div>
+                            <div class="flex items-center gap-1.5">
+                                <h3 class="font-semibold text-sm text-slate-200">Science Journal Direct</h3>
+                                <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-indigo-400"></i>
+                            </div>
+                            <p class="text-xs text-slate-500">Posted 2 hours ago • Science & Tech</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-2">
+                        <div id="badge-container-2" class="hidden"></div>
+                        <button id="analyze-btn-2" onclick="analyzeSinglePost(2)"
+                            class="px-3.5 py-1.5 bg-indigo-600/90 hover:bg-indigo-500 text-white text-xs font-semibold rounded-xl border border-indigo-400/30 transition-all flex items-center gap-1.5 shadow-md shadow-indigo-600/20 active:scale-95">
+                            <i data-lucide="shield-check" class="w-4 h-4"></i>
+                            <span id="analyze-btn-text-2">Analyze Post</span>
+                        </button>
+                    </div>
+                </div>
+
+                <h2 class="text-lg font-medium text-slate-100 mb-2 leading-snug">
+                    James Webb Space Telescope detects water vapor and carbon dioxide signatures on exoplanet WASP-96b
+                    atmosphere.
+                </h2>
+                <p class="text-sm text-slate-400 mb-4">
+                    Peer-reviewed observations published in Nature Astrophysics confirm atmospheric composition detailed
+                    spectrum analyses...
+                </p>
+
+                <div id="analysis-box-2"
+                    class="bg-slate-950/60 border border-slate-800/80 rounded-xl p-3.5 mb-4 flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <div id="status-icon-2" class="p-2 bg-slate-800 text-slate-400 rounded-lg shrink-0">
+                            <i data-lucide="help-circle" class="w-4 h-4"></i>
+                        </div>
+                        <div>
+                            <p id="status-title-2" class="text-xs font-medium text-slate-300">Not Analyzed Yet</p>
+                            <p id="status-desc-2" class="text-[11px] text-slate-500">Click "Analyze Post" above to
+                                inspect accuracy.</p>
+                        </div>
+                    </div>
+                    <button id="breakdown-btn-2" onclick="openAIReviewModal(2)"
+                        class="hidden px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-medium rounded-lg transition-colors border border-slate-700 shrink-0">
+                        View Breakdown
+                    </button>
+                </div>
+
+                <div class="flex items-center justify-between text-slate-400 text-xs pt-2 border-t border-slate-800/80">
+                    <div class="flex items-center gap-6">
+                        <span class="flex items-center gap-1.5"><i data-lucide="heart" class="w-4 h-4"></i> 8.9K</span>
+                        <span class="flex items-center gap-1.5"><i data-lucide="message-square" class="w-4 h-4"></i>
+                            412</span>
+                    </div>
+
+                    <button onclick="openCommunityEvidence(2)"
+                        class="flex items-center gap-1.5 px-3 py-1 bg-indigo-950/60 hover:bg-indigo-900/60 text-indigo-300 rounded-lg border border-indigo-800/50 transition-colors">
+                        <i data-lucide="file-check-2" class="w-3.5 h-3.5 text-indigo-400"></i>
+                        <span>Community Evidence (<strong id="evidence-count-2">1</strong>)</span>
+                    </button>
+                </div>
+            </article>
+
+        </main>
+
+        <!-- EXTENSION POPUP SIDE PANEL WITH TABS -->
+        <aside id="extensionPopup"
+            class="w-96 glass-panel border-l border-slate-800 flex flex-col shadow-2xl z-20 absolute top-0 right-0 bottom-0 transition-transform duration-300 transform translate-x-0">
+
+            <!-- Extension Top Header -->
+            <div class="p-4 border-b border-slate-800 flex items-center justify-between bg-slate-900/90">
+                <div class="flex items-center gap-2.5">
+                    <div
+                        class="w-8 h-8 rounded-xl bg-indigo-600 flex items-center justify-center text-white font-black shadow-lg shadow-indigo-600/30">
+                        <i data-lucide="shield-check" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                        <h2 class="font-bold text-sm text-slate-100 flex items-center gap-1.5">
+                            VeriFact AI <span
+                                class="bg-indigo-500/20 text-indigo-300 text-[10px] px-1.5 py-0.5 rounded font-mono border border-indigo-500/30">COMMUNITY</span>
+                        </h2>
+                        <p class="text-[11px] text-slate-400">Truth & Evidence Network</p>
+                    </div>
+                </div>
+                <button onclick="toggleExtensionPopup()"
+                    class="p-1.5 rounded-lg hover:bg-slate-800 text-slate-400 hover:text-slate-200">
+                    <i data-lucide="x" class="w-4 h-4"></i>
+                </button>
+            </div>
+
+            <!-- Extension Navigation Tabs -->
+            <div class="flex border-b border-slate-800 bg-slate-950/50 p-1 text-xs font-medium">
+                <button id="tab-btn-control" onclick="switchTab('control')"
+                    class="flex-1 py-2 rounded-lg text-indigo-400 bg-slate-800/80 transition-all flex items-center justify-center gap-1.5">
+                    <i data-lucide="sliders" class="w-3.5 h-3.5"></i> Controls
+                </button>
+                <button id="tab-btn-community" onclick="switchTab('community')"
+                    class="flex-1 py-2 rounded-lg text-slate-400 hover:text-slate-200 transition-all flex items-center justify-center gap-1.5">
+                    <i data-lucide="users" class="w-3.5 h-3.5"></i> Evidence Hub
+                </button>
+            </div>
+
+            <!-- TAB 1: CONTROLS & AI SCANNER -->
+            <div id="tab-content-control" class="flex-1 overflow-y-auto p-4 space-y-5">
+
+                <div class="bg-slate-900/80 rounded-2xl p-4 border border-slate-800 text-center">
+                    <span class="text-xs text-slate-400 font-medium uppercase tracking-wider block mb-2">Analyzed Posts
+                        on Tab</span>
+
+                    <div class="text-4xl font-extrabold text-slate-100 my-2">
+                        <span id="scannedCount">0</span><span class="text-lg text-slate-500 font-normal"> / 2</span>
+                    </div>
+
+                    <p class="text-[11px] text-slate-400">On-demand protection. Click <b class="text-indigo-400">Analyze
+                            Post</b> on any item to evaluate truthfulness.</p>
+                </div>
+
+                <!-- Custom Headline Sandbox -->
+                <div class="bg-slate-900/80 rounded-2xl p-4 border border-slate-800">
+                    <div class="flex items-center gap-2 mb-2">
+                        <i data-lucide="sparkles" class="w-4 h-4 text-indigo-400"></i>
+                        <h3 class="text-xs font-semibold text-slate-200">Manual Statement Check</h3>
+                    </div>
+
+                    <div class="space-y-2">
+                        <textarea id="customScanInput" rows="2" placeholder="Paste headline or text to check..."
+                            class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-slate-200 placeholder-slate-600 focus:outline-none focus:border-indigo-500 transition-colors resize-none"></textarea>
+
+                        <button onclick="runCustomTextScan()" id="scanButton"
+                            class="w-full py-2 bg-indigo-600 hover:bg-indigo-500 text-white font-medium text-xs rounded-xl flex items-center justify-center gap-2 transition-all shadow-lg shadow-indigo-600/20 active:scale-95">
+                            <i data-lucide="search" class="w-3.5 h-3.5"></i>
+                            <span>Analyze Statement</span>
+                        </button>
+                    </div>
+
+                    <div id="customScanResult"
+                        class="hidden mt-3 p-3 bg-slate-950 border border-slate-800 rounded-xl space-y-2"></div>
+                </div>
+
+            </div>
+
+            <!-- TAB 2: COMMUNITY EVIDENCE HUB -->
+            <div id="tab-content-community" class="hidden flex-1 overflow-y-auto p-4 space-y-4">
+
+                <div class="flex items-center justify-between">
+                    <h3 class="text-xs font-bold uppercase tracking-wider text-slate-300 flex items-center gap-1.5">
+                        <i data-lucide="shield-check" class="w-4 h-4 text-indigo-400"></i> Active Post Evidence
+                    </h3>
+                    <span
+                        class="text-[10px] bg-indigo-500/20 text-indigo-300 px-2 py-0.5 rounded border border-indigo-500/30">Live
+                        Peer Review</span>
+                </div>
+
+                <!-- Post Selector Dropdown for Evidence -->
+                <div class="space-y-1">
+                    <label class="text-[11px] text-slate-400">Select Active Feed Post:</label>
+                    <select id="evidencePostSelect" onchange="renderCommunityEvidence()"
+                        class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2 text-xs text-slate-200 focus:outline-none focus:border-indigo-500">
+                        <option value="1">Post #1: NASA Twin Moon Claim</option>
+                        <option value="2">Post #2: Webb Space Telescope WASP-96b</option>
+                    </select>
+                </div>
+
+                <!-- Evidence Feed List -->
+                <div id="evidenceListContainer" class="space-y-3">
+                    <!-- Dynamically populated via JS -->
+                </div>
+
+                <!-- Submit New Evidence Form -->
+                <div class="bg-slate-900/90 rounded-2xl p-3.5 border border-slate-800 space-y-3 mt-4">
+                    <h4 class="text-xs font-semibold text-slate-200 flex items-center gap-1.5">
+                        <i data-lucide="plus-circle" class="w-4 h-4 text-emerald-400"></i> Submit Community Proof / Link
+                    </h4>
+
+                    <input type="text" id="evidenceSourceUrl" placeholder="Source URL (e.g., https://nasa.gov/article)"
+                        class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2 text-xs text-slate-200 placeholder-slate-600 focus:outline-none focus:border-indigo-500">
+
+                    <textarea id="evidenceNotes" rows="2" placeholder="Brief explanation or debunking proof..."
+                        class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2 text-xs text-slate-200 placeholder-slate-600 focus:outline-none focus:border-indigo-500 resize-none"></textarea>
+
+                    <div class="flex gap-2">
+                        <select id="evidenceType"
+                            class="bg-slate-950 border border-slate-800 rounded-xl p-1.5 text-xs text-slate-300">
+                            <option value="debunk">🔴 Debunk / Fake Proof</option>
+                            <option value="verify">🟢 Supporting / True Proof</option>
+                        </select>
+
+                        <button onclick="submitNewEvidence()"
+                            class="flex-1 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white font-medium text-xs rounded-xl transition-all shadow-md active:scale-95">
+                            Submit Proof
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+            <div
+                class="p-3 border-t border-slate-800 bg-slate-950/80 flex items-center justify-between text-[11px] text-slate-500">
+                <span class="flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500"></span> Peer Verification Active
+                </span>
+            </div>
+
+        </aside>
+
+    </div>
+
+    <!-- AI MODAL BREAKDOWN -->
+    <div id="aiReviewModal"
+        class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md hidden opacity-0 transition-opacity duration-300">
+        <div class="bg-slate-900 border border-slate-800 w-full max-w-2xl rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh] transform scale-95 transition-transform duration-300"
+            id="modalContainer">
+
+            <div
+                class="p-5 border-b border-slate-800 flex items-center justify-between bg-slate-900/90 sticky top-0 z-10">
+                <div class="flex items-center gap-3">
+                    <div class="p-2.5 bg-indigo-600/20 text-indigo-400 rounded-2xl border border-indigo-500/30">
+                        <i data-lucide="bot" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-base font-bold text-slate-100">VeriFact AI Breakdown</h2>
+                        <p class="text-xs text-slate-400" id="modalClaimSource">Verified against trusted database nodes
+                        </p>
+                    </div>
+                </div>
+
+                <button onclick="closeAIReviewModal()"
+                    class="p-2 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-400 hover:text-white transition-colors">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <div class="p-6 overflow-y-auto space-y-6">
+
+                <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 space-y-3">
+                    <span class="text-[11px] font-semibold uppercase tracking-wider text-slate-500">Analyzed Post
+                        Headline</span>
+                    <h3 id="modalHeadline" class="text-base font-semibold text-slate-200 leading-snug"></h3>
+
+                    <div class="space-y-1.5 pt-2">
+                        <div class="flex justify-between text-xs font-semibold">
+                            <span id="modalTruthLabel" class="text-rose-400">Calculated Likelihood</span>
+                            <span id="modalTruthPercent" class="text-rose-400 font-mono text-sm">89%</span>
+                        </div>
+                        <div class="w-full h-3 bg-slate-800 rounded-full overflow-hidden p-0.5">
+                            <div id="modalProgressBar"
+                                class="h-full rounded-full transition-all duration-1000 bg-rose-500" style="width: 89%">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-2">
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+                        <i data-lucide="cpu" class="w-4 h-4 text-indigo-400"></i> AI Verdict & Reasoning
+                    </h4>
+                    <div id="modalSummaryBox"
+                        class="p-4 rounded-2xl text-xs text-slate-300 leading-relaxed space-y-2 bg-slate-950/60 border border-slate-800">
+                    </div>
+                </div>
+
+                <div class="flex justify-end pt-2">
+                    <button onclick="closeAIReviewModal()"
+                        class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-medium text-xs rounded-xl transition-all shadow-lg shadow-indigo-600/20">
+                        Close Analysis
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION -->
+    <div id="toast"
+        class="fixed bottom-5 left-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 bg-slate-900 border border-slate-700 text-slate-200 px-4 py-3 rounded-2xl shadow-2xl flex items-center gap-3 text-xs">
+        <i data-lucide="info" class="w-4 h-4 text-indigo-400"></i>
+        <span id="toastMessage">Action completed</span>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        // Data Store
+        const postsData = {
+            1: {
+                headline: "🚨 BREAKING: NASA confirms Earth has captured a second moon in permanent orbit, visible to the naked eye starting tonight!",
+                badgeText: "89% FAKE",
+                badgeClass: "bg-rose-950 border-rose-500/60 text-rose-400",
+                label: "Calculated Fake Likelihood",
+                percent: 89,
+                type: "fake",
+                summary: "Debunked by NASA JPL official logs. Object 2026-XQ is a temporary mini-moon (2 meters wide) and completely invisible without specialized observatory equipment.",
+                sources: "NASA JPL, ESA Deep Space Network"
+            },
+            2: {
+                headline: "James Webb Space Telescope detects water vapor and carbon dioxide signatures on exoplanet WASP-96b atmosphere.",
+                badgeText: "96% FACT",
+                badgeClass: "bg-emerald-950 border-emerald-500/60 text-emerald-400",
+                label: "Verified Accuracy Rating",
+                percent: 96,
+                type: "fact",
+                summary: "Cross-referenced with 4 academic archives (NASA, ESA, Nature Journal). High peer correlation and verified spectral reading data.",
+                sources: "Nature Astrophysics, Space Telescope Science Institute"
+            }
+        };
+
+        // Community Evidence Database
+        const communityEvidenceDB = {
+            1: [
+                {
+                    id: 101,
+                    author: "Alex_Astro",
+                    role: "Verified Researcher",
+                    type: "debunk",
+                    url: "https://jpl.nasa.gov/news/2026-xq-asteroid",
+                    notes: "NASA JPL official bulletin explicitly confirms 2026-XQ is only 2 meters wide and invisible to eyes.",
+                    upvotes: 42,
+                    downvotes: 1
+                },
+                {
+                    id: 102,
+                    author: "FactChecker_Phil",
+                    role: "Contributor",
+                    type: "debunk",
+                    url: "https://snopes.com/fact-check/second-moon-visible",
+                    notes: "Viral image attached is CGI artwork created by a digital artist in 2021.",
+                    upvotes: 28,
+                    downvotes: 0
+                }
+            ],
+            2: [
+                {
+                    id: 201,
+                    author: "Dr_Elena_R",
+                    role: "Astrophysicist",
+                    type: "verify",
+                    url: "https://nature.com/articles/s41586-026-wasp96b",
+                    notes: "Peer-reviewed paper published in Nature Astrophysics. Full NIRISS spectrum dataset public.",
+                    upvotes: 56,
+                    downvotes: 0
+                }
+            ]
+        };
+
+        const analyzedState = { 1: false, 2: false };
+
+        // Toggle Extension Popup Panel
+        function toggleExtensionPopup() {
+            const popup = document.getElementById('extensionPopup');
+            popup.classList.toggle('translate-x-full');
+        }
+
+        // Tab Switcher inside Extension
+        function switchTab(tab) {
+            const btnControl = document.getElementById('tab-btn-control');
+            const btnCommunity = document.getElementById('tab-btn-community');
+            const contentControl = document.getElementById('tab-content-control');
+            const contentCommunity = document.getElementById('tab-content-community');
+
+            if (tab === 'control') {
+                btnControl.className = "flex-1 py-2 rounded-lg text-indigo-400 bg-slate-800/80 transition-all flex items-center justify-center gap-1.5";
+                btnCommunity.className = "flex-1 py-2 rounded-lg text-slate-400 hover:text-slate-200 transition-all flex items-center justify-center gap-1.5";
+                contentControl.classList.remove('hidden');
+                contentCommunity.classList.add('hidden');
+            } else {
+                btnCommunity.className = "flex-1 py-2 rounded-lg text-indigo-400 bg-slate-800/80 transition-all flex items-center justify-center gap-1.5";
+                btnControl.className = "flex-1 py-2 rounded-lg text-slate-400 hover:text-slate-200 transition-all flex items-center justify-center gap-1.5";
+                contentCommunity.classList.remove('hidden');
+                contentControl.classList.add('hidden');
+                renderCommunityEvidence();
+            }
+        }
+
+        // Open Community Tab Directly from Post Evidence Button
+        function openCommunityEvidence(postId) {
+            document.getElementById('evidencePostSelect').value = postId;
+            switchTab('community');
+            const popup = document.getElementById('extensionPopup');
+            if (popup.classList.contains('translate-x-full')) {
+                popup.classList.remove('translate-x-full');
+            }
+        }
+
+        // Render Evidence List in Community Tab
+        function renderCommunityEvidence() {
+            const postId = document.getElementById('evidencePostSelect').value;
+            const list = communityEvidenceDB[postId] || [];
+            const container = document.getElementById('evidenceListContainer');
+
+            if (list.length === 0) {
+                container.innerHTML = `<div class="p-4 bg-slate-950 rounded-xl text-xs text-slate-500 text-center">No community evidence submitted yet. Be the first!</div>`;
+                return;
+            }
+
+            container.innerHTML = list.map(item => `
+        <div class="p-3 bg-slate-900/90 border border-slate-800 rounded-xl space-y-2">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="font-semibold text-xs text-slate-200">${item.author}</span>
+              <span class="text-[9px] bg-slate-800 text-indigo-300 px-1.5 py-0.5 rounded border border-slate-700">${item.role}</span>
+            </div>
+            <span class="text-[10px] font-bold px-2 py-0.5 rounded ${item.type === 'debunk' ? 'bg-rose-950 text-rose-400 border border-rose-800/50' : 'bg-emerald-950 text-emerald-400 border border-emerald-800/50'}">
+              ${item.type === 'debunk' ? 'Debunk Proof' : 'Supporting Proof'}
+            </span>
+          </div>
+
+          <p class="text-xs text-slate-300 leading-normal">${item.notes}</p>
+
+          <a href="${item.url}" target="_blank" class="text-[11px] text-indigo-400 hover:underline flex items-center gap-1 truncate">
+            <i data-lucide="external-link" class="w-3 h-3 shrink-0"></i> ${item.url}
+          </a>
+
+          <div class="flex items-center justify-between pt-1 border-t border-slate-800/80 text-[11px] text-slate-400">
+            <span>Verified Source Link</span>
+            <div class="flex items-center gap-3">
+              <button onclick="voteEvidence(${postId}, ${item.id}, 'up')" class="hover:text-emerald-400 flex items-center gap-1">
+                <i data-lucide="thumbs-up" class="w-3.5 h-3.5"></i> <span>${item.upvotes}</span>
+              </button>
+              <button onclick="voteEvidence(${postId}, ${item.id}, 'down')" class="hover:text-rose-400 flex items-center gap-1">
+                <i data-lucide="thumbs-down" class="w-3.5 h-3.5"></i> <span>${item.downvotes}</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+
+            lucide.createIcons();
+        }
+
+        // Submit New Community Proof
+        function submitNewEvidence() {
+            const postId = document.getElementById('evidencePostSelect').value;
+            const url = document.getElementById('evidenceSourceUrl').value.trim();
+            const notes = document.getElementById('evidenceNotes').value.trim();
+            const type = document.getElementById('evidenceType').value;
+
+            if (!url || !notes) {
+                showToast("Please provide both a source URL and explanatory notes.");
+                return;
+            }
+
+            const newProof = {
+                id: Date.now(),
+                author: "Luigi Barte (You)",
+                role: "Community Member",
+                type: type,
+                url: url,
+                notes: notes,
+                upvotes: 1,
+                downvotes: 0
+            };
+
+            if (!communityEvidenceDB[postId]) communityEvidenceDB[postId] = [];
+            communityEvidenceDB[postId].unshift(newProof);
+
+            // Update counter badge on post
+            const countElem = document.getElementById(`evidence-count-${postId}`);
+            if (countElem) countElem.innerText = communityEvidenceDB[postId].length;
+
+            // Clear Form & Re-render
+            document.getElementById('evidenceSourceUrl').value = '';
+            document.getElementById('evidenceNotes').value = '';
+            renderCommunityEvidence();
+
+            showToast("Your evidence contribution has been published!");
+        }
+
+        // Upvote / Downvote Evidence
+        function voteEvidence(postId, itemIdx, dir) {
+            const list = communityEvidenceDB[postId];
+            const item = list.find(i => i.id === itemIdx);
+            if (item) {
+                if (dir === 'up') item.upvotes++;
+                else item.downvotes++;
+                renderCommunityEvidence();
+                showToast("Vote recorded");
+            }
+        }
+
+        // Single Post Analyze Trigger
+        function analyzeSinglePost(id) {
+            if (analyzedState[id]) {
+                openAIReviewModal(id);
+                return;
+            }
+
+            const btn = document.getElementById(`analyze-btn-${id}`);
+            const btnText = document.getElementById(`analyze-btn-text-${id}`);
+            const badgeContainer = document.getElementById(`badge-container-${id}`);
+
+            btn.disabled = true;
+            btnText.innerText = "Analyzing...";
+            btn.innerHTML = `<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> Analyzing...`;
+            lucide.createIcons();
+
+            showToast(`User permission granted: Analyzing Post #${id}...`);
+
+            setTimeout(() => {
+                analyzedState[id] = true;
+                const data = postsData[id];
+
+                btn.disabled = false;
+                btn.className = "px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold rounded-xl border border-slate-700 transition-all flex items-center gap-1.5";
+                btn.innerHTML = `<i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i> Re-Analyze`;
+
+                badgeContainer.classList.remove('hidden');
+                badgeContainer.innerHTML = `
+          <div class="flex items-center gap-1.5 px-3 py-1 rounded-xl text-xs font-bold border shadow-lg ${data.badgeClass}">
+            <i data-lucide="${data.type === 'fake' ? 'alert-triangle' : 'check-circle'}" class="w-3.5 h-3.5"></i>
+            <span>${data.badgeText}</span>
+          </div>
+        `;
+
+                const box = document.getElementById(`analysis-box-${id}`);
+                const icon = document.getElementById(`status-icon-${id}`);
+                const title = document.getElementById(`status-title-${id}`);
+                const desc = document.getElementById(`status-desc-${id}`);
+                const breakdownBtn = document.getElementById(`breakdown-btn-${id}`);
+
+                breakdownBtn.classList.remove('hidden');
+
+                if (data.type === 'fake') {
+                    box.className = "bg-rose-950/30 border border-rose-900/50 rounded-xl p-3.5 mb-4 flex items-center justify-between";
+                    icon.className = "p-2 bg-rose-500/20 text-rose-400 rounded-lg shrink-0";
+                    icon.innerHTML = `<i data-lucide="alert-triangle" class="w-4 h-4"></i>`;
+                    title.className = "text-xs font-semibold text-rose-200";
+                    title.innerText = "VeriFact AI Alert: High Misinformation Risk";
+                } else {
+                    box.className = "bg-emerald-950/30 border border-emerald-900/50 rounded-xl p-3.5 mb-4 flex items-center justify-between";
+                    icon.className = "p-2 bg-emerald-500/20 text-emerald-400 rounded-lg shrink-0";
+                    icon.innerHTML = `<i data-lucide="shield-check" class="w-4 h-4"></i>`;
+                    title.className = "text-xs font-semibold text-emerald-200";
+                    title.innerText = "VeriFact AI Verified: High Accuracy";
+                }
+
+                desc.className = "text-[11px] text-slate-300";
+                desc.innerText = data.summary;
+
+                updateCount();
+                lucide.createIcons();
+                showToast(`Analysis complete for Post #${id}`);
+            }, 1100);
+        }
+
+        // Bulk Action
+        function analyzeAllPosts() {
+            showToast("Starting analysis for all page posts...");
+            [1, 2].forEach((id, index) => {
+                setTimeout(() => {
+                    if (!analyzedState[id]) analyzeSinglePost(id);
+                }, index * 400);
+            });
+        }
+
+        function updateCount() {
+            const count = Object.values(analyzedState).filter(Boolean).length;
+            document.getElementById('scannedCount').innerText = count;
+        }
+
+        // AI Modal Review
+        function openAIReviewModal(postId) {
+            const data = postsData[postId];
+            if (!data || !analyzedState[postId]) return;
+
+            document.getElementById('modalHeadline').innerText = data.headline;
+            document.getElementById('modalTruthLabel').innerText = data.label;
+            document.getElementById('modalTruthPercent').innerText = `${data.percent}%`;
+            document.getElementById('modalSummaryBox').innerText = data.summary;
+            document.getElementById('modalClaimSource').innerText = `Verified with: ${data.sources}`;
+
+            const progressBar = document.getElementById('modalProgressBar');
+            progressBar.style.width = `${data.percent}%`;
+            progressBar.className = `h-full rounded-full transition-all duration-1000 ${data.type === 'fake' ? 'bg-rose-500' : 'bg-emerald-500'}`;
+
+            const modal = document.getElementById('aiReviewModal');
+            const container = document.getElementById('modalContainer');
+
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                container.classList.remove('scale-95');
+            }, 10);
+        }
+
+        function closeAIReviewModal() {
+            const modal = document.getElementById('aiReviewModal');
+            const container = document.getElementById('modalContainer');
+            modal.classList.add('opacity-0');
+            container.classList.add('scale-95');
+            setTimeout(() => modal.classList.add('hidden'), 300);
+        }
+
+        // Custom Text Scan
+        function runCustomTextScan() {
+            const input = document.getElementById('customScanInput').value.trim();
+            const output = document.getElementById('customScanResult');
+            const btn = document.getElementById('scanButton');
+
+            if (!input) {
+                showToast("Please enter a claim to analyze");
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerHTML = `<i data-lucide="loader-2" class="w-3.5 h-3.5 animate-spin"></i> Scanning...`;
+            lucide.createIcons();
+
+            setTimeout(() => {
+                btn.disabled = false;
+                btn.innerHTML = `<i data-lucide="search" class="w-3.5 h-3.5"></i> Analyze Statement`;
+                lucide.createIcons();
+
+                output.classList.remove('hidden');
+                output.innerHTML = `
+          <div class="flex items-center justify-between text-xs font-semibold text-rose-400">
+            <span>High Risk Detected</span>
+            <span>82% Fake Probability</span>
+          </div>
+          <p class="text-[11px] text-slate-300">Claim cross-referenced with database. Matches previously debunked viral claims.</p>
+        `;
+            }, 1000);
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMessage').innerText = msg;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => toast.classList.add('translate-y-20', 'opacity-0'), 2800);
+        }
+
+        // Initial Community Evidence Render
+        renderCommunityEvidence();
+    </script>
+</body>
+
+</html>
