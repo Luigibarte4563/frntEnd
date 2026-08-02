@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community Verification Hub</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Font: Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0f4ff',
+                            100: '#e0e9fe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            900: '#1e1b4b',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f8fafc;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col md:flex-row">
+
+    <!-- Sidebar Navigation -->
+    <aside id="sidebar" class="w-full md:w-64 bg-slate-900 text-white flex-shrink-0 flex flex-col justify-between hidden md:flex min-h-screen sticky top-0 z-30 transition-all duration-300">
+        <div>
+            <!-- Logo Header -->
+            <div class="p-6 border-b border-slate-800 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center font-black text-xl text-white shadow-lg shadow-indigo-500/30">
+                        M
+                    </div>
+                    <div>
+                        <h1 class="font-extrabold text-lg leading-tight tracking-tight text-white">MILDA</h1>
+                        <p class="text-[11px] text-slate-400 font-medium">Learn, Verify, Share Responsibly</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nav Links -->
+            <nav class="p-4 space-y-1.5">
+                <div class="px-3 py-2 text-[11px] font-bold tracking-wider text-slate-400 uppercase">LEARNING</div>
+                <a href="#" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-300 hover:bg-slate-800/80 hover:text-white transition group">
+                    <i class="fa-solid fa-gauge-high text-slate-400 group-hover:text-indigo-400 w-5"></i>
+                    <span class="text-sm font-semibold">Dashboard</span>
+                </a>
+                <a href="#" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-300 hover:bg-slate-800/80 hover:text-white transition group">
+                    <i class="fa-solid fa-book-open text-slate-400 group-hover:text-indigo-400 w-5"></i>
+                    <span class="text-sm font-semibold">Course Modules</span>
+                </a>
+                
+                <div class="px-3 py-2 mt-4 text-[11px] font-bold tracking-wider text-slate-400 uppercase">COMMUNITY</div>
+                <a href="#" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-300 hover:bg-slate-800/80 hover:text-white transition group">
+                    <i class="fa-solid fa-shield-check text-slate-400 group-hover:text-indigo-400 w-5"></i>
+                    <span class="text-sm font-semibold">Verify Content</span>
+                </a>
+                <a href="#" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-indigo-600 text-white font-semibold shadow-md shadow-indigo-600/20">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-users-viewfinder w-5 text-indigo-200"></i>
+                        <span class="text-sm">Verification Hub</span>
+                    </div>
+                    <span class="bg-indigo-500/50 text-indigo-100 text-xs px-2 py-0.5 rounded-full font-bold">Active</span>
+                </a>
+                <a href="#" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-300 hover:bg-slate-800/80 hover:text-white transition group">
+                    <i class="fa-solid fa-trophy text-slate-400 group-hover:text-indigo-400 w-5"></i>
+                    <span class="text-sm font-semibold">Leaderboard & Badges</span>
+                </a>
+            </nav>
+        </div>
+
+        <!-- Sidebar Footer Box -->
+        <div class="p-4 border-t border-slate-800">
+            <div class="bg-slate-800/80 border border-slate-700/60 rounded-2xl p-4 text-center">
+                <div class="w-8 h-8 rounded-full bg-indigo-500/20 text-indigo-400 flex items-center justify-center mx-auto mb-2 text-sm">
+                    <i class="fa-solid fa-award"></i>
+                </div>
+                <h4 class="text-xs font-bold text-slate-200">Fact Checker Level 2</h4>
+                <p class="text-[11px] text-slate-400 mt-1">42 verification points earned this month.</p>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="flex-1 flex flex-col min-w-0 overflow-x-hidden">
+
+        <!-- Top App Navigation Header -->
+        <header class="bg-white border-b border-slate-200 px-4 md:px-8 py-3.5 sticky top-0 z-20 flex items-center justify-between gap-4 shadow-sm">
+            <div class="flex items-center gap-3">
+                <button id="mobileMenuBtn" class="md:hidden p-2 rounded-lg text-slate-600 hover:bg-slate-100">
+                    <i class="fa-solid fa-bars text-lg"></i>
+                </button>
+                <div>
+                    <h1 class="text-lg md:text-xl font-bold text-slate-900 leading-tight">Verification Hub</h1>
+                    <p class="text-xs text-slate-500 hidden sm:block">Reports, trusted sources, reviews, and disputes</p>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-2 md:gap-3">
+                <!-- Search input -->
+                <div class="relative hidden lg:block w-64">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-slate-400 text-sm"></i>
+                    <input type="text" id="searchInput" placeholder="Search claims or URLs..." class="w-full pl-9 pr-4 py-1.5 bg-slate-100 hover:bg-slate-100/80 focus:bg-white text-xs rounded-xl border border-transparent focus:border-indigo-300 focus:outline-none transition">
+                </div>
+
+                <button onclick="triggerDemoTour()" class="px-3.5 py-1.5 rounded-xl border border-indigo-200 bg-indigo-50/60 text-indigo-700 font-semibold text-xs hover:bg-indigo-100 transition flex items-center gap-1.5 shadow-sm">
+                    <i class="fa-solid fa-wand-magic-sparkles text-indigo-500"></i>
+                    <span>Demo Tour</span>
+                </button>
+
+                <button onclick="showToast('You are in view mode')" class="px-3.5 py-1.5 rounded-xl bg-rose-50 text-rose-600 border border-rose-200 font-semibold text-xs hover:bg-rose-100 transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-square-xmark text-rose-500"></i>
+                    <span>Exit View</span>
+                </button>
+
+                <!-- Notification Dropdown Toggle -->
+                <button class="w-9 h-9 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 flex items-center justify-center relative transition">
+                    <i class="fa-regular fa-bell"></i>
+                    <span class="w-2 h-2 rounded-full bg-rose-500 absolute top-2 right-2 ring-2 ring-white"></span>
+                </button>
+
+                <!-- User Profile Avatar -->
+                <div class="w-9 h-9 rounded-xl bg-indigo-900 text-indigo-100 font-bold text-xs flex items-center justify-center shadow-sm cursor-pointer hover:ring-2 hover:ring-indigo-500/50 transition">
+                    JC
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Hub Header & Controls -->
+        <main class="p-4 md:p-8 max-w-7xl mx-auto w-full space-y-6">
+            
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-2 border-b border-slate-200/80">
+                <div>
+                    <h2 class="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight">Community Verification Hub</h2>
+                    <p class="text-xs md:text-sm text-slate-500 mt-1">Participate through evidence, responsible feedback, and moderated review.</p>
+                </div>
+
+                <!-- Filter Pill Buttons -->
+                <div class="flex items-center gap-1.5 overflow-x-auto pb-1 md:pb-0 scrollbar-none" id="filterContainer">
+                    <button data-filter="all" class="filter-btn active px-4 py-1.5 rounded-full text-xs font-bold transition bg-indigo-600 text-white shadow-sm">
+                        All
+                    </button>
+                    <button data-filter="verified" class="filter-btn px-4 py-1.5 rounded-full text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 transition">
+                        Verified
+                    </button>
+                    <button data-filter="needs-review" class="filter-btn px-4 py-1.5 rounded-full text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 transition">
+                        Needs Review
+                    </button>
+                    <button data-filter="manipulated" class="filter-btn px-4 py-1.5 rounded-full text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 transition">
+                        Manipulated Media
+                    </button>
+                </div>
+            </div>
+
+            <!-- Action Bar (Create report + search on mobile) -->
+            <div class="flex items-center justify-between gap-3">
+                <div class="relative flex-1 lg:hidden">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-slate-400 text-xs"></i>
+                    <input type="text" id="mobileSearchInput" placeholder="Search claims or links..." class="w-full pl-8 pr-3 py-1.5 bg-white text-xs rounded-xl border border-slate-200 focus:outline-none">
+                </div>
+                <button onclick="openNewReportModal()" class="ml-auto px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold transition flex items-center gap-2 shadow-sm">
+                    <i class="fa-solid fa-plus"></i>
+                    <span>Submit New Claim</span>
+                </button>
+            </div>
+
+            <!-- Cards Grid Container -->
+            <div id="cardsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Javascript will dynamically render cards here based on state -->
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Add Source URL Modal -->
+    <div id="addSourceModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-100 animate-in fade-in zoom-in duration-200">
+            <div class="flex items-center justify-between pb-4 border-b border-slate-100">
+                <h3 class="font-bold text-slate-900 text-base">Attach Social Media or News URL</h3>
+                <button onclick="closeModal('addSourceModal')" class="text-slate-400 hover:text-slate-600 w-7 h-7 rounded-lg hover:bg-slate-100 flex items-center justify-center">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            
+            <form id="addSourceForm" onsubmit="handleSourceSubmit(event)" class="mt-4 space-y-4">
+                <input type="hidden" id="modalCardId">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Platform Type</label>
+                    <select id="platformType" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500/20">
+                        <option value="facebook"><i class="fa-brands fa-facebook"></i> Facebook Post / Reel</option>
+                        <option value="instagram"><i class="fa-brands fa-instagram"></i> Instagram Photo / Reel</option>
+                        <option value="x"><i class="fa-brands fa-x-twitter"></i> X (Twitter) Post</option>
+                        <option value="tiktok"><i class="fa-brands fa-tiktok"></i> TikTok Video</option>
+                        <option value="youtube"><i class="fa-brands fa-youtube"></i> YouTube Video / Shorts</option>
+                        <option value="web"><i class="fa-solid fa-globe"></i> Official News Site / Portal</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Source URL</label>
+                    <input type="url" id="sourceUrlInput" required placeholder="https://www.facebook.com/share/p/..." class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500/20">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Source Label / Context</label>
+                    <input type="text" id="sourceLabelInput" placeholder="e.g., Original viral post by User123" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500/20">
+                </div>
+
+                <div class="pt-2 flex justify-end gap-2">
+                    <button type="button" onclick="closeModal('addSourceModal')" class="px-4 py-2 text-xs font-semibold text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-xl transition">Cancel</button>
+                    <button type="submit" class="px-4 py-2 text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl transition shadow-sm">Save Source</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Submit New Claim Modal -->
+    <div id="newReportModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-100">
+            <div class="flex items-center justify-between pb-4 border-b border-slate-100">
+                <h3 class="font-bold text-slate-900 text-base">Submit New Claim for Community Review</h3>
+                <button onclick="closeModal('newReportModal')" class="text-slate-400 hover:text-slate-600 w-7 h-7 rounded-lg hover:bg-slate-100 flex items-center justify-center">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            
+            <form id="newReportForm" onsubmit="handleNewReportSubmit(event)" class="mt-4 space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Claim Quote / Statement</label>
+                    <input type="text" id="newClaimTitle" required placeholder='"Classes are suspended tomorrow in all schools."' class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500/20">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Initial Context & Findings</label>
+                    <textarea id="newClaimBody" rows="2" placeholder="No official city or school authority is cited in the post..." class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500/20"></textarea>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">Initial Status Badge</label>
+                        <select id="newClaimStatus" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs">
+                            <option value="needs-verification">Needs Verification</option>
+                            <option value="community-verified">Community Verified</option>
+                            <option value="edited-media">Possible Edited Media</option>
+                            <option value="frequently-reported">Frequently Reported</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">Primary Social URL</label>
+                        <input type="url" id="newClaimUrl" placeholder="https://facebook.com/..." class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs">
+                    </div>
+                </div>
+
+                <div class="pt-2 flex justify-end gap-2">
+                    <button type="button" onclick="closeModal('newReportModal')" class="px-4 py-2 text-xs font-semibold text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-xl transition">Cancel</button>
+                    <button type="submit" class="px-4 py-2 text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl transition shadow-sm">Publish to Hub</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div id="toast" class="fixed bottom-6 right-6 bg-slate-900 text-white px-4 py-3 rounded-xl shadow-xl flex items-center gap-3 text-xs font-medium z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+        <i class="fa-solid fa-circle-check text-emerald-400 text-sm" id="toastIcon"></i>
+        <span id="toastMessage">Action completed successfully!</span>
+    </div>
+
+    <script>
+        // Initial Dataset matching screenshot with added URLs!
+        let cardsData = [
+            {
+                id: 1,
+                statusKey: 'needs-verification',
+                badgeText: 'Needs Verification',
+                badgeStyle: 'bg-amber-100 text-amber-800 border-amber-200',
+                metaText: '4 reports',
+                title: '"Classes are suspended tomorrow in all schools."',
+                body: 'No city or school authority is cited in the original post.',
+                callout: 'Evidence needed: official advisory from the school, city government, or disaster office.',
+                calloutBorder: 'border-l-indigo-600',
+                votes: { reliable: 12, needsReview: 48, misleading: 17 },
+                userVoted: null,
+                urls: [
+                    { platform: 'facebook', label: 'Facebook Viral Post', url: 'https://facebook.com/groups/deped-announcements/posts/849201928' },
+                    { platform: 'instagram', label: 'Instagram Story Snapshot', url: 'https://instagram.com/p/C3x9kL1S89u/' }
+                ]
+            },
+            {
+                id: 2,
+                statusKey: 'community-verified',
+                badgeText: 'Community Verified',
+                badgeStyle: 'bg-emerald-100 text-emerald-800 border-emerald-200',
+                metaText: '3 trusted sources',
+                title: 'Updated scholarship application deadline',
+                body: 'The date matches the official university announcement and registrar notice.',
+                callout: 'Moderation note: supported by two independent official records.',
+                calloutBorder: 'border-l-emerald-600',
+                votes: { reliable: 86, needsReview: 4, misleading: 1 },
+                userVoted: null,
+                urls: [
+                    { platform: 'web', label: 'University Portal Notice', url: 'https://registrar.university.edu/scholarships/2026-update' },
+                    { platform: 'facebook', label: 'Official FB Page Post', url: 'https://facebook.com/StateUniversityOfficial/posts/102938481' }
+                ]
+            },
+            {
+                id: 3,
+                statusKey: 'manipulated',
+                badgeText: 'Possible Edited Media',
+                badgeStyle: 'bg-purple-100 text-purple-800 border-purple-200',
+                metaText: 'Under review',
+                title: 'Viral photo of public landmark flood levels',
+                body: 'Metadata suggests contrast manipulation and digital alteration in lower left quad.',
+                callout: 'Moderation note: Reverse image search matches an origin photo from 2021.',
+                calloutBorder: 'border-l-purple-600',
+                votes: { reliable: 3, needsReview: 62, misleading: 104 },
+                userVoted: null,
+                urls: [
+                    { platform: 'x', label: 'X (Twitter) Viral Tweet', url: 'https://x.com/weather_watch_ph/status/1782910293' },
+                    { platform: 'tiktok', label: 'TikTok Video Clip', url: 'https://tiktok.com/@cityupdates/video/7391829012' }
+                ]
+            },
+            {
+                id: 4,
+                statusKey: 'frequently-reported',
+                badgeText: 'Frequently Reported',
+                badgeStyle: 'bg-rose-100 text-rose-800 border-rose-200',
+                metaText: '11 reports',
+                title: 'Unverified medical cure shared in social groups',
+                body: 'Promotes home concoction with false claims of immediate viral immunity.',
+                callout: 'Health Advisory: FDA and DOH have published warnings regarding this product.',
+                calloutBorder: 'border-l-rose-600',
+                votes: { reliable: 2, needsReview: 15, misleading: 142 },
+                userVoted: null,
+                urls: [
+                    { platform: 'facebook', label: 'Facebook Health Group', url: 'https://facebook.com/groups/healthtips/posts/3819203' },
+                    { platform: 'youtube', label: 'YouTube Short Demo', url: 'https://youtube.com/shorts/9xKw82aLmn0' }
+                ]
+            },
+            {
+                id: 5,
+                statusKey: 'community-verified',
+                badgeText: 'Community Verified',
+                badgeStyle: 'bg-emerald-100 text-emerald-800 border-emerald-200',
+                metaText: '2 official sources',
+                title: 'Campus registration schedule changes for Fall 2026',
+                body: 'Confirmed via official student portal bulletin and email blast to all departments.',
+                callout: 'Moderation note: Cross-checked with academic calendar PDF.',
+                calloutBorder: 'border-l-emerald-600',
+                votes: { reliable: 94, needsReview: 2, misleading: 0 },
+                userVoted: null,
+                urls: [
+                    { platform: 'facebook', label: 'Student Council Post', url: 'https://facebook.com/StudentCouncil/posts/99120381' },
+                    { platform: 'web', label: 'Official Academic Portal', url: 'https://portal.university.edu/news/reg-schedule' }
+                ]
+            },
+            {
+                id: 6,
+                statusKey: 'manipulated',
+                badgeText: 'Synthetic Media',
+                badgeStyle: 'bg-purple-100 text-purple-800 border-purple-200',
+                metaText: 'AI-generated audio flag',
+                title: 'Synthetic-looking portrait used in a press statement',
+                body: 'Audio analysis shows pitch artifacting characteristic of voice cloning models.',
+                callout: 'AI Detector Flag: 94% confidence score for deepfake synthetic speech.',
+                calloutBorder: 'border-l-purple-600',
+                votes: { reliable: 5, needsReview: 31, misleading: 89 },
+                userVoted: null,
+                urls: [
+                    { platform: 'instagram', label: 'Instagram Reel Clip', url: 'https://instagram.com/reels/C8mP910xZQ/' },
+                    { platform: 'x', label: 'X Broadcast Stream', url: 'https://x.com/news_alert/status/1928301928' }
+                ]
+            }
+        ];
+
+        let activeFilter = 'all';
+        let searchQuery = '';
+
+        // Helper: Platform Icon Mapping
+        function getPlatformIcon(platform) {
+            switch(platform) {
+                case 'facebook':
+                    return { icon: 'fa-brands fa-facebook', color: 'text-blue-600 bg-blue-50 border-blue-200' };
+                case 'instagram':
+                    return { icon: 'fa-brands fa-instagram', color: 'text-pink-600 bg-pink-50 border-pink-200' };
+                case 'x':
+                    return { icon: 'fa-brands fa-x-twitter', color: 'text-slate-800 bg-slate-100 border-slate-300' };
+                case 'tiktok':
+                    return { icon: 'fa-brands fa-tiktok', color: 'text-slate-900 bg-slate-100 border-slate-300' };
+                case 'youtube':
+                    return { icon: 'fa-brands fa-youtube', color: 'text-red-600 bg-red-50 border-red-200' };
+                default:
+                    return { icon: 'fa-solid fa-globe', color: 'text-indigo-600 bg-indigo-50 border-indigo-200' };
+            }
+        }
+
+        // Render Cards Function
+        function renderCards() {
+            const grid = document.getElementById('cardsGrid');
+            grid.innerHTML = '';
+
+            const filtered = cardsData.filter(card => {
+                const matchesFilter = (activeFilter === 'all') || 
+                    (activeFilter === 'verified' && card.statusKey === 'community-verified') ||
+                    (activeFilter === 'needs-review' && card.statusKey === 'needs-verification') ||
+                    (activeFilter === 'manipulated' && card.statusKey === 'manipulated');
+                
+                const query = searchQuery.toLowerCase();
+                const matchesSearch = card.title.toLowerCase().includes(query) || 
+                                      card.body.toLowerCase().includes(query) ||
+                                      card.urls.some(u => u.url.toLowerCase().includes(query) || u.label.toLowerCase().includes(query));
+
+                return matchesFilter && matchesSearch;
+            });
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full py-16 text-center bg-white rounded-2xl border border-slate-200">
+                        <i class="fa-solid fa-magnifying-glass-slash text-4xl text-slate-300 mb-3"></i>
+                        <h3 class="text-base font-bold text-slate-700">No matching reports found</h3>
+                        <p class="text-xs text-slate-500 mt-1">Try tweaking your search or filter options.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            filtered.forEach(card => {
+                const cardEl = document.createElement('div');
+                cardEl.className = "bg-white rounded-2xl border border-slate-200/90 shadow-sm hover:shadow-md transition duration-200 flex flex-col justify-between overflow-hidden group";
+
+                // Format Social URLs HTML
+                const urlsHtml = card.urls.map(u => {
+                    const platformInfo = getPlatformIcon(u.platform);
+                    const truncatedUrl = u.url.replace(/^https?:\/\/(www\.)?/, '');
+                    
+                    return `
+                        <div class="flex items-center justify-between gap-2 p-2 rounded-xl bg-slate-50 hover:bg-slate-100/80 border border-slate-100 transition">
+                            <div class="flex items-center gap-2.5 min-w-0">
+                                <span class="w-6 h-6 rounded-lg flex items-center justify-center text-xs ${platformInfo.color} flex-shrink-0">
+                                    <i class="${platformInfo.icon}"></i>
+                                </span>
+                                <div class="min-w-0">
+                                    <p class="text-[11px] font-bold text-slate-700 truncate leading-tight">${u.label}</p>
+                                    <a href="${u.url}" target="_blank" rel="noopener" class="text-[10px] text-indigo-600 hover:underline truncate block">
+                                        ${truncatedUrl}
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-1 flex-shrink-0">
+                                <button onclick="copyToClipboard('${u.url}')" title="Copy URL" class="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-white transition">
+                                    <i class="fa-regular fa-copy text-xs"></i>
+                                </button>
+                                <a href="${u.url}" target="_blank" rel="noopener" title="Open Link" class="p-1.5 rounded-lg text-slate-400 hover:text-indigo-600 hover:bg-white transition">
+                                    <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                                </a>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+                cardEl.innerHTML = `
+                    <div class="p-5 space-y-4">
+                        <!-- Top Header Badge -->
+                        <div class="flex items-center justify-between">
+                            <span class="px-3 py-1 rounded-full text-xs font-bold border ${card.badgeStyle}">
+                                ${card.badgeText}
+                            </span>
+                            <span class="text-xs text-slate-400 font-medium">
+                                ${card.metaText}
+                            </span>
+                        </div>
+
+                        <!-- Card Main Content -->
+                        <div>
+                            <h3 class="text-base md:text-lg font-bold text-slate-900 leading-snug">
+                                ${card.title}
+                            </h3>
+                            <p class="text-xs md:text-sm text-slate-500 mt-2 leading-relaxed">
+                                ${card.body}
+                            </p>
+                        </div>
+
+                        <!-- Callout Note Box -->
+                        <div class="p-3 bg-slate-50 border-l-4 ${card.calloutBorder} rounded-r-xl text-xs text-slate-700 font-medium leading-relaxed">
+                            ${card.callout}
+                        </div>
+
+                        <!-- User Verification Vote Action Buttons -->
+                        <div class="flex flex-wrap items-center gap-2 pt-1">
+                            <button onclick="vote(${card.id}, 'reliable')" class="flex-1 py-1.5 px-2.5 rounded-xl text-xs font-semibold border transition ${card.userVoted === 'reliable' ? 'bg-indigo-600 text-white border-indigo-600' : 'bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100'}">
+                                Reliable <span class="font-bold ml-1">${card.votes.reliable}</span>
+                            </button>
+
+                            <button onclick="vote(${card.id}, 'needsReview')" class="flex-1 py-1.5 px-2.5 rounded-xl text-xs font-semibold border transition ${card.userVoted === 'needsReview' ? 'bg-amber-600 text-white border-amber-600' : 'bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100'}">
+                                Needs Review <span class="font-bold ml-1">${card.votes.needsReview}</span>
+                            </button>
+
+                            <button onclick="vote(${card.id}, 'misleading')" class="flex-1 py-1.5 px-2.5 rounded-xl text-xs font-semibold border transition ${card.userVoted === 'misleading' ? 'bg-rose-600 text-white border-rose-600' : 'bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100'}">
+                                Misleading <span class="font-bold ml-1">${card.votes.misleading}</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Bottom Social Media / URLs Footer Box -->
+                    <div class="p-4 bg-slate-50/70 border-t border-slate-100 space-y-2.5">
+                        <div class="flex items-center justify-between">
+                            <span class="text-[11px] font-bold text-slate-500 uppercase tracking-wider flex items-center gap-1.5">
+                                <i class="fa-solid fa-link text-slate-400"></i> Referenced Social Links (${card.urls.length})
+                            </span>
+                            <button onclick="openAddSourceModal(${card.id})" class="text-xs font-bold text-indigo-600 hover:text-indigo-800 hover:underline flex items-center gap-1">
+                                <i class="fa-solid fa-plus text-[10px]"></i> Add Source
+                            </button>
+                        </div>
+
+                        <div class="space-y-1.5">
+                            ${urlsHtml}
+                        </div>
+                    </div>
+                `;
+
+                grid.appendChild(cardEl);
+            });
+        }
+
+        // Voting Handler
+        function vote(cardId, voteType) {
+            const card = cardsData.find(c => c.id === cardId);
+            if (!card) return;
+
+            if (card.userVoted === voteType) {
+                // Remove vote
+                card.votes[voteType]--;
+                card.userVoted = null;
+                showToast('Vote removed');
+            } else {
+                // If voted previously, revert old vote
+                if (card.userVoted) {
+                    card.votes[card.userVoted]--;
+                }
+                card.votes[voteType]++;
+                card.userVoted = voteType;
+                showToast(`Marked as ${voteType.replace(/([A-Z])/g, ' $1').toLowerCase()}`);
+            }
+
+            renderCards();
+        }
+
+        // Copy URL Helper
+        function copyToClipboard(text) {
+            const tempInput = document.createElement("input");
+            tempInput.value = text;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+            showToast('Link copied to clipboard!');
+        }
+
+        // Modal Controls
+        function openAddSourceModal(cardId) {
+            document.getElementById('modalCardId').value = cardId;
+            document.getElementById('sourceUrlInput').value = '';
+            document.getElementById('sourceLabelInput').value = '';
+            document.getElementById('addSourceModal').classList.remove('hidden');
+        }
+
+        function openNewReportModal() {
+            document.getElementById('newClaimTitle').value = '';
+            document.getElementById('newClaimBody').value = '';
+            document.getElementById('newClaimUrl').value = '';
+            document.getElementById('newReportModal').classList.remove('hidden');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.add('hidden');
+        }
+
+        // Submit Source URL Handler
+        function handleSourceSubmit(e) {
+            e.preventDefault();
+            const cardId = parseInt(document.getElementById('modalCardId').value);
+            const platform = document.getElementById('platformType').value;
+            const url = document.getElementById('sourceUrlInput').value;
+            const label = document.getElementById('sourceLabelInput').value || `${platform.toUpperCase()} Post`;
+
+            const card = cardsData.find(c => c.id === cardId);
+            if (card) {
+                card.urls.push({ platform, label, url });
+                renderCards();
+                closeModal('addSourceModal');
+                showToast('New source link attached successfully!');
+            }
+        }
+
+        // Submit New Claim Handler
+        function handleNewReportSubmit(e) {
+            e.preventDefault();
+            const title = document.getElementById('newClaimTitle').value;
+            const body = document.getElementById('newClaimBody').value || 'Awaiting further community evidence.';
+            const statusVal = document.getElementById('newClaimStatus').value;
+            const initialUrl = document.getElementById('newClaimUrl').value;
+
+            let badgeText = 'Needs Verification';
+            let badgeStyle = 'bg-amber-100 text-amber-800 border-amber-200';
+            let calloutBorder = 'border-l-indigo-600';
+
+            if (statusVal === 'community-verified') {
+                badgeText = 'Community Verified';
+                badgeStyle = 'bg-emerald-100 text-emerald-800 border-emerald-200';
+                calloutBorder = 'border-l-emerald-600';
+            } else if (statusVal === 'edited-media') {
+                badgeText = 'Possible Edited Media';
+                badgeStyle = 'bg-purple-100 text-purple-800 border-purple-200';
+                calloutBorder = 'border-l-purple-600';
+            } else if (statusVal === 'frequently-reported') {
+                badgeText = 'Frequently Reported';
+                badgeStyle = 'bg-rose-100 text-rose-800 border-rose-200';
+                calloutBorder = 'border-l-rose-600';
+            }
+
+            const urls = [];
+            if (initialUrl) {
+                let platform = 'web';
+                if (initialUrl.includes('facebook.com')) platform = 'facebook';
+                else if (initialUrl.includes('instagram.com')) platform = 'instagram';
+                else if (initialUrl.includes('x.com') || initialUrl.includes('twitter.com')) platform = 'x';
+                else if (initialUrl.includes('tiktok.com')) platform = 'tiktok';
+                else if (initialUrl.includes('youtube.com') || initialUrl.includes('youtu.be')) platform = 'youtube';
+
+                urls.push({ platform, label: 'Submitted Link', url: initialUrl });
+            }
+
+            const newCard = {
+                id: Date.now(),
+                statusKey: statusVal,
+                badgeText,
+                badgeStyle,
+                metaText: '1 report',
+                title,
+                body,
+                callout: 'Under initial community review and moderation.',
+                calloutBorder,
+                votes: { reliable: 1, needsReview: 0, misleading: 0 },
+                userVoted: 'reliable',
+                urls
+            };
+
+            cardsData.unshift(newCard);
+            renderCards();
+            closeModal('newReportModal');
+            showToast('Claim published to Verification Hub!');
+        }
+
+        // Demo Tour Trigger
+        function triggerDemoTour() {
+            showToast('✨ Demo Tour: Click on "Add Source" or vote buttons to test interactivity!');
+        }
+
+        // Toast Feedback System
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            toastMessage.textContent = message;
+
+            toast.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
+            }, 3000);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Mobile Sidebar Toggle
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const sidebar = document.getElementById('sidebar');
+            mobileMenuBtn.addEventListener('click', () => {
+                sidebar.classList.toggle('hidden');
+            });
+
+            // Search Inputs
+            const searchInput = document.getElementById('searchInput');
+            const mobileSearchInput = document.getElementById('mobileSearchInput');
+
+            function handleSearch(val) {
+                searchQuery = val;
+                renderCards();
+            }
+
+            searchInput?.addEventListener('input', (e) => handleSearch(e.target.value));
+            mobileSearchInput?.addEventListener('input', (e) => handleSearch(e.target.value));
+
+            // Filter Tabs
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filterBtns.forEach(b => {
+                        b.classList.remove('bg-indigo-600', 'text-white', 'shadow-sm');
+                        b.classList.add('bg-white', 'border', 'border-slate-200', 'text-slate-600');
+                    });
+                    btn.classList.remove('bg-white', 'border', 'border-slate-200', 'text-slate-600');
+                    btn.classList.add('bg-indigo-600', 'text-white', 'shadow-sm');
+
+                    activeFilter = btn.getAttribute('data-filter');
+                    renderCards();
+                });
+            });
+
+            // Initial Render
+            renderCards();
+        });
+    </script>
+</body>
+</html>
